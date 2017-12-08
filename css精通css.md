@@ -1,41 +1,41 @@
 ## 一、选择器
 ### （一）选择器的类型
 1. 类型选择器：用来寻找特定类型的元素，比如段落或者标题元素等，也被称为“元素选择器”。例如：
-```
+```css
 p{color:red;}
 div{border:1px solid black;}
 ```
 2. 后代选择器：后代选择器有其他两个选择器之间的空格表示。例如：
-```
+```css
 div p{color:red}
 ```
 3. id选择器
-```
+```css
 #intro{font-weight: 600;}
 ```
 4. 类选择器
-```
+```css
 .date-posted{color: #ccc;}
 ```
 5. 伪类
-```
+```css
 a:link{color: blue}
 div:first-child{color: red;}
 ```
 6. 通用选择器：匹配所有可用元素
-```
+```css
 *{padding:0;margin:0}
 ```
 7. 子选择器：子选择器不同于后代选择器的是——子选择器只选择元素的直接后代，而后代选择器选择一个元素的所有后代。例如下面这个例子只把id为nav的直接子元素的padding设置为10,而在li里面如果有嵌套的li元素并不受影响。
-```
+```css
 #nav>li{padding：10px;}
 ```
 8. 相邻同胞选择器：定义同一个父元素下某个元素之后的元素
-```
+```css
 h2 + p{color: #eee;}
 ```
 9. 属性选择器：属性选择器可以分局某个属性是否存在或属性的值来寻找元素。一个属性可以有多个值，值之间用空格分隔。属性选择器允许分局属性值之一寻找元素。例如:
-```
+```css
 p[rel="nofllow"]{}
 a[rel]{}
 [id="header"]{}等同于#header
@@ -76,7 +76,7 @@ a[rel]{}
 + d等于类型选择器和伪元素选择器的数量
 
 例如下面这个例子的特殊性为：0，1，0，1,以10为技术的特殊性为101.
-```
+```css
 div#content{}
 ```
 ## 二、规划、组织和维护演示表
@@ -132,14 +132,14 @@ css中有三种基本的定位机制：普通流、浮动和绝对定位。除�
 + 使用伪元素。
 
 html代码
-```
+```html
 <div>
     <p>1</p>
     <p>2</p>
 </div>
 ```
 css代码
-```
+```css
 p{
     float: left;
 }
@@ -152,7 +152,7 @@ div:after{
 2. 使用overflow：原理：触发BFC
 
 css代码
-```
+```css
 p{
     float: left;
 }
@@ -188,7 +188,7 @@ div:after{
 2. 让下划线更有趣
 + 使用text-decoration:none去掉链接的下划线，然后在鼠标经过的时候显示下划线；
 + 使用图像创建下划线：
-```
+```css
 a:link,a:visited{
     color:#666;
     text-decoration: none;
@@ -197,19 +197,19 @@ a:link,a:visited{
 ```
 3. 已访问链接的样式：
 + 通过在没每个已访问链接的旁边添加一个复选框，就可以创建一种非常简单的已访问链接的样式。
-```
+```css
 a:visited{
     padding-right: 20px;
     background: url(/img/check.gif) no-repeat right middle;
 }
 ```
 4. 为练节目标设置样式：假设希望链接到某个页面上的第三个评论，实现的方法是在href的末尾加上一个#字符。为了突出目标元素，我们使用:target伪类为目标元素设置样式。
-```
+```html
 <a href="http://example.com/story/html#commen3">
     so great!
  </a>
 ```
-```
+```css
 .commen:target{
     background-color: yellow;
 }
@@ -221,7 +221,7 @@ a:visited{
 
     这些技术有助于改进用户在站点上的浏览体验。通过提醒用户注意离站链接或可下载的文档，让用户明确的了解在单击的时候发生的情况，避免了不必要的回溯操作和烦恼。
 ### （二）类似按钮的链接
-```
+```css
 a{
     display: block;
     line-height: 1.6em;
@@ -235,7 +235,7 @@ a{
 ```
 1. 简单的翻转：在鼠标悬停的时候设置链接的背景和颜色，从而实现简单的翻转效果。
 2. 图像翻转：
-```
+```css
 a:link,a:visited {
     width: 203px;
     height: 72px;
@@ -252,7 +252,7 @@ a:active{
 这种方法在浏览器第一次加载鼠标悬停的时候图像有短暂的延迟，这会造成闪烁效果。
 
 3. Pixy样式的翻转：使用同一个图像并切换他的背景位置。这样减少了服务器的请求数量。
-```
+```css
 a:link,a:visited {
     width: 203px;
     height: 72px;
@@ -270,7 +270,7 @@ a:active{
 5. 用css3实现翻转：使用text_shadow,box-shadow,border-radius等属性。
 ### （三）纯css3工具提示：
 + 工具提示是当鼠标悬停在具有title属性的元素上时，一些浏览器弹出的黄色小文本框。可以通过使用js和css创建样式独特的自定义工具提示；也可以通过css的定位技术，实现纯css的工具提示。
-```
+```css
 a.tooltip:hover span{
     display: block;
     position: absolute;
@@ -349,7 +349,7 @@ li{
 + 然后在导航列表中的每个项中添加一个对应的ID名或者类型；
 + 使用主体ID和列表ID/类的唯一组合在站点中突出显示当前部分和页面。
 
-```
+```html
 <body id="home">
     <ul class="nav">
         <li><a href="home.html">Home</a></li>
@@ -359,7 +359,7 @@ li{
     </ul>
 </body>
 ```
-```
+```css
 #home .nav .home a,
 #home .nav .home a,
 #home .nav .home a,
