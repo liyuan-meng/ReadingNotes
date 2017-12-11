@@ -1,0 +1,19 @@
+{
+  "name": "reading",
+  "version": "1.0.0",
+  "description": "丽媛的读书笔记",
+  "main": "test.js",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liyuan-meng/reading.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liyuan-meng/reading/issues"
+  },
+  "homepage": "https://github.com/liyuan-meng/reading#readme"
+}
