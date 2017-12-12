@@ -40,7 +40,7 @@ implements  let  private   public   yield   interface   package   protected   st
 ```
 arguments   eval
 ```
-####5.javascript预定了很多全局变量和函数，应当避免使用他们作为变量名和函数名
+#### 5.javascript预定了很多全局变量和函数，应当避免使用他们作为变量名和函数名
 
 1 | 2 | 3 | 4 | 5
 ---|---|---|---|---
