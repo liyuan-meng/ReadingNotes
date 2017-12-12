@@ -7,9 +7,9 @@
 4. 条件语句：
 + if语句
 ```javascript
-if(){}else{}
+if(test){}else{}
 
-if(){}else if(){}else{}
+if(test){}else if(test){}else{}
 ```
 + switch语句
 ```javascript
@@ -46,7 +46,7 @@ while(expression)
 ```
 + for循环
 ```javascript
-for(initialize; test; increment)
+for(initialize; test; increment){}
 ```
 相当于
 ```javascript
@@ -115,10 +115,10 @@ var sum = 0, success = false;
 conmpute_sum: if(matrix.length){
     for(var x = 0; x < matrix.length; x++){
         var row = matrix[x];
-        if(!row) break compute_sum;
+        if(!row) break conmpute_sum;
         for(var y = 0; y < row.length; y++){
         var cell = row[y]
-        if(isNaN(cell)) break compute_sum;
+        if(isNaN(cell)) break conmpute_sum;
         sum += cell;
         }
     }
