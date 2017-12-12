@@ -150,7 +150,7 @@ console.log(g(),y);//local globalchanged
 1. JavaScript中唯一一个三元运算符"?:"
 1. typeof：返回值为表示操作数类型的一个字符串
 ```javascript
-"undefined" "object" "boolean" "number" "string" "function"
+"undefined","object","boolean","number","string","function"
 ```
 3. delete运算符：用来删除对象的属性或者数组元素
 4. void运算符：
