@@ -12,13 +12,14 @@
 + 字符串可以看成是由字符组成的数组，你可能认为它是可变的，然而在JavaScript中，字符串是不可变的。
 
 ### 二、数字
-1.JavaScript中的数字均用浮点数表示，JavaScript中实际操作是基于32位整数的。
+#### 1.JavaScript中的数字均用浮点数表示，JavaScript中实际操作是基于32位整数的。
 
-2.当一个数字直接出现在JavaScript程序中时，我们称之为数字直接量，JavaScript支持多种格式的数字直接量。
+#### 2.数字直接量：
+当一个数字直接出现在JavaScript程序中时，我们称之为数字直接量，JavaScript支持多种格式的数字直接量。
 + 整型直接量：包括十进制、十六进制（以“0x”或“0X”为前缀）、由于某些ECMAScript标准支持八进制直接量，而有些不支持。所以尽量不要使用以0为前缀的整型直接量。
 + 浮点型直接量：例如3.14、.333333、6.02e23、9.88E-30。
 
-3.JavaScript中的算术运算
+#### 3.JavaScript中的算术运算
 + 基本的运算：+、-、*、/、%等；
 + 复杂的算术运算：通过作为Math对象的属性定义的函数和常量来实现,Math函数详见：
 > http://www.runoob.com/jsref/jsref-obj-math.html
@@ -43,7 +44,8 @@
     var y = .2 - .1;
     console.log(x == y);//false
     ```
-4.日期和时间：JavaScript语言核心包括Data()构造函数，用来创建表示时间和日期的对象，这些日期对象的方法为日期计算提供了简单的API。
+#### 4.日期和时间：
+JavaScript语言核心包括Data()构造函数，用来创建表示时间和日期的对象，这些日期对象的方法为日期计算提供了简单的API。
 ```javascript 1.5
     //2017年12月11日 15:38
     var then = new Date(2017, 11, 11);
@@ -62,12 +64,13 @@
     console.log(later.getHours());//15
     console.log(later.getUTCHours());//7
 ```
-3.更多日期函数详见：
+#### 3.更多日期函数详见：
 > http://www.runoob.com/jsref/jsref-obj-date.html 
 ### 三、文本
-1.字符串直接量：用单引号或双引号括起来的字符序列。
+#### 1.字符串直接量：
+用单引号或双引号括起来的字符序列。
 
-2.转义字符：
+#### 2.转义字符：
 
 转义字符 | 含义 
 ---|---
@@ -84,7 +87,8 @@
 \xXX |由两位十六进制数XX指定的Latin-1字符
 \uXXXX |由四位十六进制数XX指定的Unicode字符
 
-3.字符串的使用:JavaScript的内置功能之一就是字符串连接，如果将加号（+）运算符用于数字，表示两数相加，但是将它作用于字符串，则表示字符串连接，将第二个字符串拼接在第一个之后。
+#### 3.字符串的使用:
+JavaScript的内置功能之一就是字符串连接，如果将加号（+）运算符用于数字，表示两数相加，但是将它作用于字符串，则表示字符串连接，将第二个字符串拼接在第一个之后。
 ```JavaScript
 var s = "hello world";
 console.log(s.charAt(0)); //h 第一个字符
@@ -99,8 +103,8 @@ console.log(s.split(", ")); //[ 'hello world' ]
 console.log(s.toUpperCase());//HELLO WORLD          
 ```
 
-4.常用字符串函数如下：
-+ 字符串转换
+#### 4.常用字符串函数如下：
+##### 字符串转换
 ```JavaScript
 var num= 19; // 19
 var myStr = num.toString(); // "19"
@@ -116,7 +120,8 @@ var num= 19; // 19
 var myStr = "" +num; // "19"
 ```
 
-+ 字符串分割：split()的第二个参数，表示返回的字符串数组的最大长度。
+##### 字符串分割：
+split()的第二个参数，表示返回的字符串数组的最大长度。
 ```JavaScript
 var myStr = "I,Love,You,Do,you,love,me";
 var substrArray = myStr .split(",");
@@ -124,12 +129,12 @@ var substrArray = myStr .split(",");
 var arrayLimited = myStr .split(",", 3);
 // ["I", "Love", "You"];
 ```
-+ 获取字符串长度
+##### 获取字符串长度
 ```JavaScript
 var myStr = "I,Love,You,Do,you,love,me";
 var myStrLength = myStr.length; //25
 ```
-+ 查询子字符串
+##### 查询子字符串
 
 第一个函数：indexOf()，它从字符串的开头开始查找，找到返回对应坐标，找不到返回-1。
 ```JavaScript
@@ -141,7 +146,7 @@ var index = myStr.indexOf("you"); // 7 ,基于0开始,找不到返回-1
 var myStr = "I,Love,you,Do,you,love,me";
 var index = myStr.lastIndexOf("you"); // 14
 ```
-+ 字符串替换
+##### 字符串替换
 ```JavaScript
 var myStr = "I,love,you,Do,you,love,me";
 var replacedStr = myStr.replace("love","hate");
@@ -153,7 +158,7 @@ var myStr = "I,love,you,Do,you,love,me";
 var replacedStr = myStr.replace(/love/g,"hate");
 //"I,hate,you,Do,you,hate,me"
 ```
-+ 查找给定位置的字符或其字符编码值
+##### 查找给定位置的字符或其字符编码值
 ```JavaScript	
 var myStr = "I,love,you,Do,you,love,me";
 var theChar = myStr.charAt(8);// "o",同样从0开始
@@ -163,7 +168,7 @@ var theChar = myStr.charAt(8);// "o",同样从0开始
 var myStr = "I,love,you,Do,you,love,me";
 var theChar = myStr.charCodeAt(8); //111
 ```
-+ 字符串连接
+##### 字符串连接
 ```JavaScript	
 var str1 = "I,love,you!";
 var str2 = "Do,you,love,me?";
@@ -178,7 +183,7 @@ var str = str1.concat(str2);
 //"I,love,you!Do,you,love,me?"
 ```
 其中concat()函数可以有多个参数，传递多个字符串，拼接多个字符串
-+ 字符串切割和提取
+##### 字符串切割和提取
 第一种，使用slice():
 ```JavaScript	
 var myStr = "I,love,you,Do,you,love,me";
@@ -195,7 +200,7 @@ var myStr = "I,love,you,Do,you,love,me";
 var subStr = myStr.substr(1,5); //",love"
 ```
 与第一种和第二种不同的是，substr()第二个参数代表截取的字符串最大长度，如上结果所示。
-+ 字符串大小写转换
+##### 字符串大小写转换
 ```JavaScript
 var myStr = "I,love,you,Do,you,love,me";
 var lowCaseStr = myStr.toLowerCase();
@@ -203,7 +208,7 @@ var lowCaseStr = myStr.toLowerCase();
 var upCaseStr = myStr.toUpperCase();
 //"I,LOVE,YOU,DO,YOU,LOVE,ME"
 ```
-+ 字符串匹配
+##### 字符串匹配
 ```JavaScript
 var myStr = "I,love,you,Do,you,love,me";
 var pattern = /love/;
@@ -229,7 +234,7 @@ var myStr = "I,love,you,Do,you,love,me";
 var pattern = /love/;
 var result = myStr.search(pattern);//2
 ```
-+ 字符串比较：
+##### 字符串比较：
 ```JavaScript
 var myStr = "chicken";
 var myStrTwo = "egg";
@@ -238,10 +243,9 @@ first = myStr.localeCompare("chicken"); // 0
 first = myStr.localeCompare("apple"); // 1
 ```
 说明比较结果的数字。如果 myStr 小于 myStrTwo，则 localeCompare() 返回小于 0 的数。如果 myStr 大于 myStrTwo，则该方法返回大于 0 的数。如果两个字符串相等，或根据本地排序规则没有区别，该方法返回 0。
-5.模式匹配：利用正则表达式实现字符串的匹配
-
-正则表达式：
-+ 正则表达式修饰符：修饰符可以在全局搜说中不区分大小写
+#### 5.模式匹配：利用正则表达式实现字符串的匹配
+##### 正则表达式修饰符：
+修饰符可以在全局搜说中不区分大小写
 
 修饰符 | 描述 
 ---|---
@@ -249,8 +253,8 @@ i | 执行对大小写不敏感的匹配
 g |执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
 m |执行多行匹配。
  
-+ 表达式 | 描述 
-
+##### 表达式
+表达式 | 描述 
 ---|---
 [abc] |查找方括号之间的任何字符。
 [^abc] |查找任何不在方括号之间的字符。
@@ -264,10 +268,9 @@ m |执行多行匹配。
 [abc] | 查找方括号之间的任何字符。
 [0-9] |查找任何从 0 至 9 的数字。
 (red\|blue) |查找任何以 \| 分隔的选项。
-元字符是拥有特殊含义的字符：
+##### 元字符是拥有特殊含义的字符：
 
-+ 元字符 | 描述 
-
+元字符 | 描述 
 ---|---
 \d |查找数字。
 \D |查找非数字。
@@ -288,7 +291,7 @@ m |执行多行匹配。
 \uxxxx |查找以十六进制数 xxxx 规定的 Unicode 字符
 
 
-+ 量词:
+##### 量词:
 
 量词 | 描述 
 ---|---
@@ -303,7 +306,7 @@ n$|匹配任何结尾为 n 的字符串。
 ?=n|匹配任何其后紧接指定字符串 n 的字符串
 ?!n|匹配任何其后没有紧接指定字符串 n 的字符串。
 
-+ RegExp 对象方法
+##### RegExp 对象方法
 
 方法 | 描述 
 ---|---
@@ -311,7 +314,7 @@ compile |编译正则表达式
 exec |检索字符串中指定的值。如果字符串中有匹配的值返回该匹配值，否则返回 null。
 test |检索字符串中指定的值。返回 true 或 false。
 
-+ 支持正则表达式的 String 对象的方法
+##### 支持正则表达式的 String 对象的方法
 
 方法 | 描述 
 ---|---
@@ -320,7 +323,8 @@ match |找到一个或者多个正则表达式的匹配。 match() 方法将检�
 replace |替换与正则表达式匹配的子串。
 split |把字符串分割为字符串数组。
 
-例子compile：在字符串中全局搜索 "man"，并用 "person" 替换。然后通过 compile() 方法，改变正则表达式，用 "person" 替换 "man" 或 "woman"，：
+##### 例子compile：
+在字符串中全局搜索 "man"，并用 "person" 替换。然后通过 compile() 方法，改变正则表达式，用 "person" 替换 "man" 或 "woman"，：
 ```javascript
 var str="Every man in the world! Every woman on earth!";
 var patt=/man/g;
@@ -333,7 +337,7 @@ document.write(str2);
 //Every person in the world! Every woperson on earth!
 //Every person in the world! Every person on earth!
 ```
-例子exec：
+##### 例子exec：
 ```javascript
 var str="Hello world!";
 //look for "Hello"
@@ -348,44 +352,44 @@ document.write("<br>Returned value: " + result);
 // Returned value: Hello
 // Returned value: null
 ```
-例子search：
+##### 例子search：
 ```javascript
 var str="Mr. Blue has a blue house";
 document.write(str.search("blue"));
 //15
 ```
-例子match:
+##### 例子match:
 ```javascript
 var str="The rain in SPAIN stays mainly in the plain"; 
 var n=str.match(/ain/gi);
 //ain,AIN,ain,ain
 ```
 ### 四、布尔值
-1.任意JavaScript的值都可以转换成布尔值。
-2.下面这些值都会被转换成false。
+#### 1.任意JavaScript的值都可以转换成布尔值。
+#### 2.下面这些值都会被转换成false。
 ```
 undefined null 0 -0 NaN ""(空字符串)
 ```
 所有其他值，包括所有对象（数组）都会转换成true。
-3.布尔值包含toString()方法，因此可以使用这个方法将字符串转换成"true"或者"false".
-4.三个重要的布尔运算符
+#### 3.布尔值包含toString()方法，因此可以使用这个方法将字符串转换成"true"或者"false".
+#### 4.三个重要的布尔运算符
 ```
 && || !
 ```
 ### 五、null和undefind
-1.null:
+#### 1.null:
 + 用来描述“空值”；
 + typeof null返回"object"；
 + null是它自有类型的唯一一个成员；
 + 可以表示数字、字符串、对象是无值的；
-2.undefined
+#### 2.undefined
 + 表示值的空缺，它是变量的一种取值，表示变量没有初始化；
 + 查询对象属性或者数组元素的值时返回undefined表示这个属性或者元素不存在；
 + 函数没有返回值，则返回undefined；
 + typeof undefined返回"undefined"；
 + undefined是它自有类型的唯一一个成员；
 + 全局属性
-3.null和undefined都是表示值的空缺，两者都是只读的。判断“==”认为两者是相等的，两者都不包含任何属性和方法。如果你想将它们赋值给变量或者属性，或者将它们作为参数传入函数，最好使用null。
+#### 3.null和undefined都是表示值的空缺，两者都是只读的。判断“==”认为两者是相等的，两者都不包含任何属性和方法。如果你想将它们赋值给变量或者属性，或者将它们作为参数传入函数，最好使用null。
 ### 六、全局对象
 1. 全局对象的属性是全局定义的符号，JavaScript程序可以直接使用，当JavaScript解析器启动的时候（或者任何web浏览器加载新页面的时候），它将创建一个新的全局对象，并给他一组定义的初始属性。
 + 全局属性
@@ -459,8 +463,8 @@ function equalArr(a,b){
 ```
 ### 九、类型转换
 
-1. JavaScript类型转换
-1. 
+#### 1. JavaScript类型转换
+ 
 原始值 | 转字符串|转数字|转布尔值|转对象 
 ---|---|---|---|---
 undefined |'undefined'|NaN|false|throws typeError
@@ -482,7 +486,7 @@ Infinity|"Infinity"| | true|new Number(Infinity)
 ["a"](其他数组)|使用join方法|NaN|true|
 function(){}|???????|NaN|true
 
-2. 显式类型转换
+#### 2. 显式类型转换
 + Boolean()、Number()、String()或者Object()函数
 ```javascript
 Number(3)//=>3
@@ -491,17 +495,17 @@ Booleab([])//=>tue
 Object(3)//=>new Number(3)
 ```
 + 注意：null和undefined之外的任何值都具有toString()方法，这个方法和String()方法返回的结果一致。
-3. 通过运算符做隐式类型转换
+#### 3. 通过运算符做隐式类型转换
 ```javascript
 x+""//等价于String(x)
 +x//等价于Number(x),也可以写成x-0
 !!x//等价于Boolean(x)
 ```
-4. 对象转换成字符串
+#### 4. 对象转换成字符串
 + 如果对象具有toString()方法，则调用，如果它返回一个原始值，JavaScript将这个原始值转换成字符串，并返回这个字符串的结果；
 + 如果对象没有toString()方法，或者这个方法并不返回一个原始值，那么JavaScript就会调用valueOf()方法，如果存在这个方法，则JavaScript调用它，如果返回值是原始值，JavaScript会将这个原始值转换成字符串，并返回这个字符串。
 + 否则，JavaScript无法获得一个原始值，抛出异常。
-5. 对象转换成数字
+#### 5. 对象转换成数字
 + 如果对象具有valueOf()方法，则调用，如果它返回一个原始值，JavaScript将这个原始值转换成数字，并返回这个数字；
 + 如果对象没有valueOf()方法，或者这个方法并不返回一个原始值，那么JavaScript就会调用toString()方法，如果存在这个方法，则JavaScript调用它，如果返回值是原始值，JavaScript会将这个原始值转换成数字，并返回这个数字。
 + 否则，JavaScript无法获得一个原始值，抛出异常。
@@ -518,9 +522,11 @@ now > now - 1;//true" 将日期转换成数字"
 ### 十、变量声明
 使用var关键字。
 ### 十一、变量作用域
-1. 全局变量拥有全局作用域。
-1. 局部变量：只在函数内有定义。在函数体内，局部变量的优先级高于同名的全局变量。
-1. 声明提前：JavaScript的函数作用域是指函数内声明所有变量在函数体内始终可见。这意味着变量在定义之间甚至可以使用。
+#### 1. 全局变量拥有全局作用域。
+#### 1. 局部变量：
+只在函数内有定义。在函数体内，局部变量的优先级高于同名的全局变量。
+#### 1. 声明提前：
+JavaScript的函数作用域是指函数内声明所有变量在函数体内始终可见。这意味着变量在定义之间甚至可以使用。
 ```javascript
 var scope = "global";
 function f(){
@@ -530,8 +536,10 @@ function f(){
 }
 ```
 上述的代码输出的解释是：将函数内的变量声明“提前”到函数体顶部，同时变量初始化留在原来的位置。
-4. 作为属性的变量:使用var声明的全局变量不可以通过delete删除.
-1. 作用域链：从局部作用域到全局作用域进行变量搜索，如果找不到，则抛出异常。
+#### 4. 作为属性的变量:
+使用var声明的全局变量不可以通过delete删除.
+#### 1. 作用域链：
+从局部作用域到全局作用域进行变量搜索，如果找不到，则抛出异常。
 
 
 
