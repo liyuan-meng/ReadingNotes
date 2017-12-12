@@ -104,7 +104,7 @@ console.log(s.toUpperCase());//HELLO WORLD
 ```
 
 #### 4.常用字符串函数如下：
-##### 字符串转换
+##### (1)字符串转换
 ```JavaScript
 var num= 19; // 19
 var myStr = num.toString(); // "19"
@@ -120,7 +120,7 @@ var num= 19; // 19
 var myStr = "" +num; // "19"
 ```
 
-##### 字符串分割：
+##### (2)字符串分割：
 split()的第二个参数，表示返回的字符串数组的最大长度。
 ```JavaScript
 var myStr = "I,Love,You,Do,you,love,me";
@@ -129,12 +129,12 @@ var substrArray = myStr .split(",");
 var arrayLimited = myStr .split(",", 3);
 // ["I", "Love", "You"];
 ```
-##### 获取字符串长度
+##### (3)获取字符串长度
 ```JavaScript
 var myStr = "I,Love,You,Do,you,love,me";
 var myStrLength = myStr.length; //25
 ```
-##### 查询子字符串
+##### (4)查询子字符串
 
 第一个函数：indexOf()，它从字符串的开头开始查找，找到返回对应坐标，找不到返回-1。
 ```JavaScript
@@ -146,7 +146,7 @@ var index = myStr.indexOf("you"); // 7 ,基于0开始,找不到返回-1
 var myStr = "I,Love,you,Do,you,love,me";
 var index = myStr.lastIndexOf("you"); // 14
 ```
-##### 字符串替换
+##### (5)字符串替换
 ```JavaScript
 var myStr = "I,love,you,Do,you,love,me";
 var replacedStr = myStr.replace("love","hate");
@@ -158,7 +158,7 @@ var myStr = "I,love,you,Do,you,love,me";
 var replacedStr = myStr.replace(/love/g,"hate");
 //"I,hate,you,Do,you,hate,me"
 ```
-##### 查找给定位置的字符或其字符编码值
+##### (6)查找给定位置的字符或其字符编码值
 ```JavaScript	
 var myStr = "I,love,you,Do,you,love,me";
 var theChar = myStr.charAt(8);// "o",同样从0开始
@@ -168,7 +168,7 @@ var theChar = myStr.charAt(8);// "o",同样从0开始
 var myStr = "I,love,you,Do,you,love,me";
 var theChar = myStr.charCodeAt(8); //111
 ```
-##### 字符串连接
+##### (7)字符串连接
 ```JavaScript	
 var str1 = "I,love,you!";
 var str2 = "Do,you,love,me?";
@@ -183,7 +183,7 @@ var str = str1.concat(str2);
 //"I,love,you!Do,you,love,me?"
 ```
 其中concat()函数可以有多个参数，传递多个字符串，拼接多个字符串
-##### 字符串切割和提取
+##### (8)字符串切割和提取
 第一种，使用slice():
 ```JavaScript	
 var myStr = "I,love,you,Do,you,love,me";
@@ -200,7 +200,7 @@ var myStr = "I,love,you,Do,you,love,me";
 var subStr = myStr.substr(1,5); //",love"
 ```
 与第一种和第二种不同的是，substr()第二个参数代表截取的字符串最大长度，如上结果所示。
-##### 字符串大小写转换
+##### (9)字符串大小写转换
 ```JavaScript
 var myStr = "I,love,you,Do,you,love,me";
 var lowCaseStr = myStr.toLowerCase();
@@ -208,7 +208,7 @@ var lowCaseStr = myStr.toLowerCase();
 var upCaseStr = myStr.toUpperCase();
 //"I,LOVE,YOU,DO,YOU,LOVE,ME"
 ```
-##### 字符串匹配
+##### (10)字符串匹配
 ```JavaScript
 var myStr = "I,love,you,Do,you,love,me";
 var pattern = /love/;
@@ -234,7 +234,7 @@ var myStr = "I,love,you,Do,you,love,me";
 var pattern = /love/;
 var result = myStr.search(pattern);//2
 ```
-##### 字符串比较：
+##### (11)字符串比较：
 ```JavaScript
 var myStr = "chicken";
 var myStrTwo = "egg";
@@ -244,7 +244,7 @@ first = myStr.localeCompare("apple"); // 1
 ```
 说明比较结果的数字。如果 myStr 小于 myStrTwo，则 localeCompare() 返回小于 0 的数。如果 myStr 大于 myStrTwo，则该方法返回大于 0 的数。如果两个字符串相等，或根据本地排序规则没有区别，该方法返回 0。
 #### 5.模式匹配：利用正则表达式实现字符串的匹配
-##### 正则表达式修饰符：
+##### (1)正则表达式修饰符：
 修饰符可以在全局搜说中不区分大小写
 
 修饰符 | 描述 
@@ -253,7 +253,7 @@ i | 执行对大小写不敏感的匹配
 g |执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
 m |执行多行匹配。
  
-##### 表达式
+##### (2)表达式
 表达式 | 描述 
 ---|---
 [abc] |查找方括号之间的任何字符。
@@ -268,7 +268,7 @@ m |执行多行匹配。
 [abc] | 查找方括号之间的任何字符。
 [0-9] |查找任何从 0 至 9 的数字。
 (red\|blue) |查找任何以 \| 分隔的选项。
-##### 元字符是拥有特殊含义的字符：
+##### (3)元字符是拥有特殊含义的字符：
 
 元字符 | 描述 
 ---|---
@@ -291,7 +291,7 @@ m |执行多行匹配。
 \uxxxx |查找以十六进制数 xxxx 规定的 Unicode 字符
 
 
-##### 量词:
+##### (4)量词:
 
 量词 | 描述 
 ---|---
@@ -306,7 +306,7 @@ n$|匹配任何结尾为 n 的字符串。
 ?=n|匹配任何其后紧接指定字符串 n 的字符串
 ?!n|匹配任何其后没有紧接指定字符串 n 的字符串。
 
-##### RegExp 对象方法
+##### (5)RegExp 对象方法
 
 方法 | 描述 
 ---|---
@@ -314,7 +314,7 @@ compile |编译正则表达式
 exec |检索字符串中指定的值。如果字符串中有匹配的值返回该匹配值，否则返回 null。
 test |检索字符串中指定的值。返回 true 或 false。
 
-##### 支持正则表达式的 String 对象的方法
+##### (6)支持正则表达式的 String 对象的方法
 
 方法 | 描述 
 ---|---
