@@ -445,21 +445,37 @@ function classof(o){
 + Object.isFrozen()检测对象是否冻结。
 #### 9. 序列化对象
 (1) 对象的序列化是指将对象转换成字符串，也可以将字符串还原为对象。
+
 (2) ES5提供了内置函数JSON.stringify()来序列化对象。
+
 (3) ES5提供了内置函数JSON.parse()来还原JavaScript对象。
 #### 10. 对象方法
 (1) toString()方法:返回一个表示调用这个方法的对象值的字符串
+
 (2) toJSON()方法：Object.prototype中没有定义这个方法，但是JSON.stringify()方法会调用这个方法。
+
 (3) valueOf()方法：当JavaScript需要将对象转换为某种原始值而非字符串的时候才会调用它。
+
 (4) Object.create(proto[, propertiesObject]):创建一个新对象
+
 (5) obj.hasOwnProperty("x"):用来检测给定的名字是否是对象自有的属性
+
 (6) obj.propertyIsEnumerable("x"): 检测自有属性是否可枚举
+
 (7) Object.getOwnPropertyDescriptor():获得某个对象的自有属性描述符。
+
 (8) Object.defineProperty()/Object.defineProperties():修改已有属性或者新建自有属性
+
 (9) obj.isPrototypeOf(p):检测对象obj是否是另一个对象p的原型
+
 (10) Object.esExtensible():来判断对象是否是可扩
+
 (11) Object.preventExtensions():将对象设置为不可扩展的
+
 (12) Object.isSealed(): 检测对象是否封闭
+
 (13) Object.seal():可以将对象设置为不可扩展的，并且将对象的所有自有属性设置为不可配置的
+
 (14) Object.isFrozen():检测对象是否冻结
+
 (15) Object.freeze(): 将对象设置为不可扩展和将其属性设置为不可配置，将对象自有属性设置为只读
