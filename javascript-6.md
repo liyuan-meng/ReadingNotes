@@ -187,8 +187,11 @@ var isArray = Function.isArray || function(o){
 ```
 #### 11. 类数组对象
 （2）Arguments对象是一个类数组对象。
+
 （3）一些Dom方法（如document.getElementByTagName()）也会返回类数组对象。
+
 （4）JavaScript数组方法可以在类数组对象上正确工作。
+
 （5）类数组对象没有直接继承自Array.prototype,那就不能在它们上面直接调用数组方法，尽管如此，也可以间接地使用Function.call方法调用。
 ```javascript 1.5
 Array.join = Array.join || function(a,sep){
