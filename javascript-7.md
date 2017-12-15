@@ -1,7 +1,7 @@
 ## 第8章 函数
 ### 一、 函数定义
 1. 函数定义从function关键字开始。
-2. 函数定义需要函数名称标识符（可选的）、一对圆括号、一堆花括号。
+2. 函数定义需要函数名称标识符（可选的）、一对圆括号、一对花括号。
 3. 注意：以表达式方式定义的函数，函数名称是可选的；一跳函数声明语句实际上是声明了一个变量，并把一个函数对象赋值给它。
 4. 函数名称通常是动词或以动词为前缀的词组。驼峰、下划线或者短名称（例如$()）。
 5. 以表达式方式定义的函数在定义之前无法使用，这是因为变量声明提前了，但是变量赋值并不会提前。
@@ -54,7 +54,7 @@ var o = new Object;
 ```
 + 构造函数调用创建一个空对象，这个对象继承自函数的prototype属性。
 + 构造函数会使用创建的新对象作为调用上下文。
-+ 构造函数通常不适用return关键字，它们通常初始化新对象。如果构造函数显示的返回一个对象，那么调用表单时的值就是这个对象；如果构造函数使用return语句但是没有指定返回值，或者返回一个原始值，那么这是将忽略原始值，同时返回这个新对象作为调用结果。
++ 构造函数通常不适用return关键字，它们通常初始化新对象。如果构造函数显示的返回一个对象，那么调用表单时的值就是这个对象；如果构造函数使用return语句但是没有指定返回值，或者返回一个原始值，那么这时将忽略原始值，同时返回这个新对象作为调用结果。
 #### 4. 间接调用
 + 使用call和apply调用
 ### 三、函数的实参和形参
@@ -478,7 +478,7 @@ console.log(squareofsum(2, 3));//25 (2+3)*(2+3)
 + 函数f的bind()方法返回一个新函数，给新函数传入特定的上下文和一组指定的参数，然后调用函数f()。我们说它把函数“绑定至”对象并传入一部分参数。bind()方法知识将实参放在（完整实参列表）左侧，也就是说传入bind()的实参都是放在传入原始函数的实参列表开始的位置，但有时我们期望传入bind()的实参放在（完整实参列表的）右侧。
 ```javascript
 //实现一个工具函数将类数组对象（或对象）转换为真正的数组
-function array(a, n) {return Array.prototype.slice().call(a, n||0)}
+function array(a, n) {return Array.prototype.slice.call(a, n||0)}
 //这个函数的实参传递到左侧
 function partialLeft(f) {
     var args = arguments;//保存外部的实参数组
@@ -551,3 +551,184 @@ var factorial = memorize(function(n){
 })
 factorial(5);//120 对于4~1的值也有缓存
 ```
+### 八、补充知识点：
+#### 1.this
++ 在绝大多数情况下，函数的调用方式决定了this的值。this不能在执行期间被赋值，并且在每次函数被调用时this的值也可能会不同。ES5引入了bind方法来设置函数的this值，而不用考虑函数如何被调用的，ES2015 引入了支持this词法解析的箭头函数（它在闭合的执行上下文内设置this的值）。
+（1）全局上下文：
++ 无论是否在严格模式下，在全局执行上下文中（在任何函数体外部）this都指代全局对象。
+```javascript
+// 在浏览器中, window 对象同时也是全局对象：
+console.log(this === window); // true
+
+a = 37;
+console.log(window.a); // 37
+
+this.b = "MDN";
+console.log(window.b)  // "MDN"
+console.log(b)         // "MDN"
+```
+（2）函数上下文：
++ 在函数内部，this的值取决于函数被调用的方式。
++ 在严格模式下，如果this未在执行的上下文中定义，那它将会默认为undefined。
++ 如果要想把this的值从一个上下文传到另一个，就要用call，或者apply方法。
+```javascript
+// 一个对象可以作为call和apply的第一个参数，并且this会被绑定到这个对象。
+var obj = {a: 'Custom'};
+
+// 这个属性是在global对象定义的。
+var a = 'Global';
+
+function whatsThis(arg) {
+  return this.a;  // this的值取决于函数的调用方式
+}
+
+whatsThis();          // 直接调用，      返回'Global'
+whatsThis.call(obj);  // 通过call调用，  返回'Custom'
+whatsThis.apply(obj); // 通过apply调用 ，返回'Custom'
+```
++ 在函数使用this关键字的情况下，它的值可以被绑定到调用中的一个特定对象，使用所有函数继承自Function.prototype的call或apply方法。
+```javascript
+function add(c, d) {
+  return this.a + this.b + c + d;
+}
+
+var o = {a: 1, b: 3};
+
+// 第一个参数是作为‘this’使用的对象
+// 后续参数作为参数传递给函数调用
+add.call(o, 5, 7); // 1 + 3 + 5 + 7 = 16
+
+// 第一个参数也是作为‘this’使用的对象
+// 第二个参数是一个数组，数组里的元素用作函数调用中的参数
+add.apply(o, [10, 20]); // 1 + 3 + 10 + 20 = 34
+```
++ 使用 call 和 apply 函数的时候要注意，如果传递的 this 值不是一个对象，JavaScript 将尝试使用内部 ToObject 操作将其转换为对象。因此，如果传递的值是一个原始值比如 7 或 'foo'，那么就会使用相关构造函数将它转换为对象，所以原始值 7 通过new Number(7)被转换为对象，而字符串'foo'使用 new String('foo') 转化为对象
+```javascript
+function bar() {
+  console.log(Object.prototype.toString.call(this));
+}
+
+//原始值 7 被隐式转换为对象
+bar.call(7); // [object Number]
+```
+（3）bind方法：
++ ECMAScript 5 引入了 Function.prototype.bind。调用f.bind(someObject)会创建一个与f具有相同函数体和作用域的函数，但是在这个新函数中，this将永久地被绑定到了bind的第一个参数，无论这个函数是如何被调用的。
+```javascript
+function f(){
+  return this.a;
+}
+
+//this被固定到了传入的对象上
+var g = f.bind({a:"azerty"});
+console.log(g()); // azerty
+
+var h = g.bind({a:'yoo'}); //bind只生效一次！
+console.log(h()); // azerty
+
+var o = {a:37, f:f, g:g, h:h};
+console.log(o.f(), o.g(), o.h()); // 37, azerty, azerty
+```
+（4）箭头函数
++ 在箭头函数中，this与封闭词法上下文的this保持一致。在全局代码中，它将被设置为全局对象。
+```javascript
+var globalObject = this;
+var foo = (() => this);
+console.log(foo() === globalObject); // true
+```
+```javascript
+// 作为对象的一个方法调用
+var obj = {foo: foo};
+console.log(obj.foo() === globalObject); // true
+
+// 尝试使用call来设定this
+console.log(foo.call(obj) === globalObject); // true
+
+// 尝试使用bind来设定this
+foo = foo.bind(obj);
+console.log(foo() === globalObject); // true
+```
++ 无论如何，foo的this被设置为它被创建时的上下文（在上面的例子中，就是全局对象）。这同样适用于在其他函数中创建的箭头函数：这些箭头函数的this被设置为外层执行上下文。
+```javascript
+// 创建一个含有bar方法的obj对象，bar返回一个函数，这个函数返回它自己的this，
+// 这个返回的函数是以箭头函数创建的，所以它的this被永久绑定到了它外层函数的this。
+// bar的值可以在调用中设置，它反过来又设置返回函数的值。
+var obj = {bar: function() {
+                    var x = (() => this);
+                    return x;
+                  }
+          };
+
+// 作为obj对象的一个方法来调用bar，把它的this绑定到obj。
+// x所指向的匿名函数赋值给fn。
+var fn = obj.bar();
+
+// 直接调用fn而不设置this，通常(即不使用箭头函数的情况)默认为全局对象，若在严格模式则为undefined
+console.log(fn() === obj); // true
+
+// 但是注意，如果你只是引用obj的方法，而没有调用它(this是在函数调用过程中设置的)
+var fn2 = obj.bar;
+// 那么调用箭头函数后，this指向window，因为它从 bar 继承了this。
+console.log(fn2()() == window); // true
+```
+（5）作为对象的方法
++ 当以对象里的方法的方式调用函数时，它们的 this 是调用该函数的对象。并且this的绑定只受最靠近的成员对象引用的影响。
+（6）原型链中的 this
++ 如果该方法存在于一个对象的原型链上，那么this指向的是调用这个方法的对象，就好像该方法本来就存在于这个对象上。
+```javascript
+var o = {
+  f : function(){ 
+    return this.a + this.b; 
+  }
+};
+var p = Object.create(o);
+p.a = 1;
+p.b = 4;
+
+console.log(p.f()); // 5
+```
+（6）getter 与 setter 中的 this
++ 用作getter或setter的函数都会把 this 绑定到正在设置或获取属性的对象。
+（7）作为构造函数
++ 当一个函数用作构造函数时（使用new关键字），它的this被绑定到正在构造的新对象。
+（8）作为一个DOM事件处理函数
++ 当函数被用作事件处理函数时，它的this指向触发事件的元素（一些浏览器在使用非addEventListener的函数动态添加监听函数时不遵守这个约定）。
+（9）作为一个内联事件处理函数
+（10）一个返回匿名函数的例子
+```javascript
+this.name = "window.name";
+var obj = {
+    name : "obj.name",
+    getName:function(){
+        console.log(this.name);
+        return function() {
+            console.log(this.name);
+        } 
+    }
+}
+var fn = obj.getName()(); // "obj.name"  "undefined"
+
+this.name = "window.name";
+var obj = {
+    name : "obj.name",
+    getName:function(){
+        console.log(this.name);
+        return function() {
+            console.log(this.name);
+        } 
+    }
+}
+var fn = obj.getName.call(this)(); // "window.name"  "undefined"
+
+this.name = "window.name";
+var obj = {
+    name : "obj.name",
+    getName:function(){
+        console.log(this.name);
+        return function() {
+            console.log(this.name);
+        } 
+    }
+}
+var fn = obj.getName().call(this); // "obj.name"  "window.name"
+```
+
