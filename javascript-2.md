@@ -407,9 +407,9 @@ undefined null 0 -0 NaN ""(空字符串)
 ### 五、null和undefind
 #### 1.null:
 + 用来描述“空值”；
-+ typeof null返回"object"；
-+ null是它自有类型的唯一一个成员；
-+ 可以表示数字、字符串、对象是无值的；
++ typeof null返回"object"。
++ null是它自有类型的唯一一个成员。
++ 可以表示数字、字符串、对象是无值的。
 #### 2.undefined
 + 表示值的空缺，它是变量的一种取值，表示变量没有初始化；
 + 查询对象属性或者数组元素的值时返回undefined表示这个属性或者元素不存在；
