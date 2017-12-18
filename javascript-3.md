@@ -6,8 +6,8 @@
 ```javascript
 []
 [1+2,3+4]
-var p = {}
-var q = {x: 2.3, y: -3}
+var p = {};
+var q = {x: 2.3, y: -3};
 ```
 2. 数组直接量中的列表逗号之间的元素可以省略。省略的空位会填充值undefined。
 ```javascript
