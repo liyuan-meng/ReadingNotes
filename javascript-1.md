@@ -13,7 +13,7 @@ true//布尔值
 用来对变量和函数进行命名。JavaScript标识符必须以字母、下划线或者美元符开始。
 
 #### 2.保留字：
-JavaScript把一些标识符拿来作为自己的保留字，因此，就不能在程序中把这些关键字作标识符了。
+JavaScript把一些标识符拿来作为自己的保留字，因此，就不能在程序中把这些关键字作标识符。
 
 ```
 break       delete      function        return      typeof  
