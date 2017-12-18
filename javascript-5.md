@@ -12,12 +12,12 @@
 + 对象的扩展标记指明了是否可以向这个对象中添加新属性。
 3. 区分三类JavaScript对象和两类属性
 + 内置对象是由ECMAScript规范定义的对象或类；
-+ 宿主对象是由JavaScript解释器所嵌入的宿主环境定义的。客户端JavaScript中表示网页结构的HTMLElement对象均是宿主对象。宿主对象可以当成内置对象；
++ 宿主对象是由JavaScript解释器所嵌入的宿主环境定义的。客户端JavaScript中表示网页结构的HTMLElement对象均是宿主对象。宿主对象可以当做内置对象；
 + 自定义对象是由运行中的JavaScript代码创建的对象；
 + 自有属性是直接在对象中定义的属性；
 + 继承属性是在对象的原型对象中定义的属性。
 4. 原型：JavaScript 常被描述为一种基于原型的语言 (prototype-based language)——每个对象拥有一个原型对象，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为原型链 (prototype chain)，它解释了为何一个对象会拥有定义在其他对象中的属性和方法。准确地说，这些属性和方法定义在Object的构造器函数(constructor functions)之上的prototype属性上，而非对象实例本身。
-+ 注意：没有原型的对象为数不多,object.prototype就是其中之一，它不继承任何属性。
++ 注意：没有原型的对象为数不多，object.prototype就是其中之一，它不继承任何属性。
 ### 一、创建对象
 #### 1. 使用对象直接量创建对象
 对象直接量是由若干名/值对组成的映射表。
@@ -116,7 +116,7 @@ alert(cat1.species); // 动物
 说明：
 + 第一行：将Cat的prototype对象指向一个Animal的实例。相当于完全删除了prototype 对象原先的值，然后赋予一个新值
 + 第二行：任何一个prototype对象都有一个constructor属性，指向它的构造函数。如果没有"Cat.prototype = new Animal();"这一行，Cat.prototype.constructor是指向Cat的；加了这一行以后，Cat.prototype.constructor指向Animal。更重要的是，每一个实例也有一个constructor属性，默认调用prototype对象的constructor属性。因此，在运行"Cat.prototype = new Animal();"这一行之后，cat1.constructor也指向Animal！因此我们必须手动纠正，将Cat.prototype对象的constructor值改为Cat。
-+ 这种方法会使Cat可以访问到Animal中的自有属性，如果不想这样，可以让cat的原型直接指向animal的原型，但是这样也有问题，就是一旦cat的原型有修改，animal的原型也会跟着修改。所以就有了下面这种方法 。
+
 (3)利用空对象作为中介，直接继承prototype
 ```javascript
 var F = function(){};
@@ -225,7 +225,6 @@ Object.prototype = 0;//赋值失败，但是没报错，因为Object.prototype�
     + Object.isFrozen() 来检测对象是否冻结。
 #### 3. 删除属性
 (1) 使用delete运算符删除对象的属性。
-
 (2) delete只能删除自有属性，不能删除继承属性（要删除继承属性必须从定义这个属性的原型对象上删除它，而且这会影响到所有继承自这个原型的对象）。
 ```javascript 1.5
 var o = {x:1};
@@ -233,11 +232,8 @@ delete o.x;//true
 delete o.x//true什么也没做，返回ture
 delete 1;//true什么也没做，返回ture
 ```
-
 (3) delete不能删除可配置性为false的属性（比如Object.prototype、var x = 1、function(){}都是不可删除的）。这种情况下，返回false，报类型错误。
-
 (4) delete不可删除函数和全局属性。
-
 (5) 非严格模式下删除全局对象的可配置属性时，可以省略对全局对象的引用。
 ```javascript 1.5
 this.x = 2;//没有使用var
@@ -245,14 +241,13 @@ delete x;//删除成功
 ```
 #### 4. 检测属性
 (1) in运算符：检查对象的自有属性或者继承属性中是否包含这个属性，是则返回true。
-
 (2) hasOwnProperty()方法:用来检测给定的名字是否是对象自有的属性，对于继承属性将返回false.
 ```javascript 1.5
 var o = {x:1};
 o.hasOwnProperty("x");//true
 o.hasOwnProperty("y");//false
 ```
-(3) propertyIsEnumerable()方法：只有检测到时自有属性并且这个属性克枚举才返回true.
+(3) propertyIsEnumerable()方法：只有检测到自有属性并且这个属性可枚举才返回true.
 ```javascript 1.5
 var o = inherit({y:1});
 o.x = 1;
@@ -263,7 +258,6 @@ Object.prototype.propertyIsEnumerable("toString");//false不可枚举
 (4) 使用"!=="判断一个属性是否存在，但是当某个属性的值为undefined的时候，这种方法失效。
 #### 5. 枚举属性
 (1) 通过for/in循环可以得到对象的所有可枚举属性属性，包括自有属性和继承属性。
-
 (2) 避免枚举出某些属性
 ```javascript 1.5
 for(var p in o){
@@ -333,9 +327,7 @@ function keys(o) {
 ```
 #### 6.属性的getter和setter
 (1) 对象属性是由名字、值和一组特性构成的，在ES5中，属性值可以用一个或两个方法替代，这两个方法就是setter和getter。有getter和setter方法定义的属性称作“存取器属性”，它不同于“数据属性”，数据属性只有一个简单的值。
-
 (2) 属性具有setter方法，具有可读性，属性具有getter方法，具有可写性。
-
 (3) 定义存取器属性的方法
 ```javascript 1.5
 var o = {
@@ -448,42 +440,16 @@ function classof(o){
 + 通过将对象传入Object.esExtensible()，来判断对象是否是可扩展的。
 + 通过将对象传入Object.preventExtensions()，来将对象设置为不可扩展的。返回传入的对象
 + Object.seal()可以将对象设置为不可扩展的，并且将对象的所有自有属性设置为不可配置的。也就是说，不能给这个对象添加新属性，也不能删除和配置已有的属性，不过它已有的可写属性依然可以设置，对于那些已经封闭起来的对象是不能够解封的。返回传入的对象
-+ 可以使用Object.isSealed   ()来检测对象是否封闭。
++ 可以使用Object.isSealed()来检测对象是否封闭。
 + Object.freeze()将对象设置为不可扩展和将其属性设置为不可配置，将对象自有属性设置为只读，存储器属性不受影响。返回传入的对象
 + Object.isFrozen()检测对象是否冻结。
 #### 9. 序列化对象
 (1) 对象的序列化是指将对象转换成字符串，也可以将字符串还原为对象。
-
 (2) ES5提供了内置函数JSON.stringify()来序列化对象。
-
 (3) ES5提供了内置函数JSON.parse()来还原JavaScript对象。
 #### 10. 对象方法
 (1) toString()方法:返回一个表示调用这个方法的对象值的字符串
-
 (2) toJSON()方法：Object.prototype中没有定义这个方法，但是JSON.stringify()方法会调用这个方法。
-
 (3) valueOf()方法：当JavaScript需要将对象转换为某种原始值而非字符串的时候才会调用它。
-
-(4) Object.create(proto[, propertiesObject]):创建一个新对象
-
-(5) obj.hasOwnProperty("x"):用来检测给定的名字是否是对象自有的属性
-
-(6) obj.propertyIsEnumerable("x"): 检测自有属性是否可枚举
-
-(7) Object.getOwnPropertyDescriptor():获得某个对象的自有属性描述符。
-
-(8) Object.defineProperty()/Object.defineProperties():修改已有属性或者新建自有属性
-
-(9) obj.isPrototypeOf(p):检测对象obj是否是另一个对象p的原型
-
-(10) Object.esExtensible():来判断对象是否是可扩
-
-(11) Object.preventExtensions():将对象设置为不可扩展的
-
-(12) Object.isSealed(): 检测对象是否封闭
-
-(13) Object.seal():可以将对象设置为不可扩展的，并且将对象的所有自有属性设置为不可配置的
-
-(14) Object.isFrozen():检测对象是否冻结
-
-(15) Object.freeze(): 将对象设置为不可扩展和将其属性设置为不可配置，将对象自有属性设置为只读
+(4)
+   
