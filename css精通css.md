@@ -5,7 +5,7 @@
 p{color:red;}
 div{border:1px solid black;}
 ```
-2. 后代选择器：后代选择器有其他两个选择器之间的空格表示。例如：
+2. 后代选择器：后代选择器有其他两个选择器之间的空格表示。例：
 ```css
 div p{color:red}
 ```
