@@ -126,7 +126,7 @@ conmpute_sum: if(matrix.length){
 注意：
 + continue语句在while循环中直接进入下一轮的循环条件，但是for循环首先计算其increment表达式，然后判断循环条件。
 
-##### (4)return语句
+##### (4) return语句
    + 只能在函数体内出现；
    + 函数没有return，执行结果是undefined；
    + return语句可以单独使用
@@ -136,7 +136,7 @@ conmpute_sum: if(matrix.length){
    + 抛出异常时，JavaScript解释器会立即停止当前正在进行的逻辑，并跳转到就近的异常处理程序（try/catch/finally）
 ```javascript
 if(x < 0){
-    throw new Error("x不能是负数")
+    throw new Error("x不能是负数");
 }
 ```
 #### 6.try/catch/finally语句：
