@@ -53,10 +53,12 @@ console.log(Animal.prototype.constructor === Animal);//true
 console.log(animal.constructor === Animal);//true
 ```
 #### 3. javascript中的Java式的继承
+
 （1）在JavaScript中定义类的步骤：
 + 先定义一个构造函数并设置初始化新对象的实例属性。
 + 给构造函数的prototype对象定义实例的方法。
 + 给构造函数定义类字段和类属性。
+
 （2）java中有很多重要特性在JavaScript类中时无法模拟的。
 #### 4. 类的扩充
 + JavaScript中基于原型的继承机制是动态的：对象从其原型继承属性，如果创建对象之后原型的属性发生改变，也会影响到继承这个原型链的所有实例对象。这意味着我们可以通过给原型添加新方法来扩充JavaScript类。
@@ -67,11 +69,14 @@ console.log(animal.constructor === Animal);//true
 + instanceof和isPrototypeOf()方法的缺点是：
     + 无法通过对象来获得类名，只能检测对象是否属于指定的类名。
     + 在客户端多窗口多框架子页面的web应用中兼容性不佳，每个窗口和框架子页面都具有单独的执行上下文，每个上下文都包含独有的全局变量和一组构造函数。在两个不同框架页面中创建的两个数组继承自两个相同但互相独立的原型对象，其中一个框架页面中的数组不是另一个框架页面的Array()构造函数的实例，instanceof运算结果是false。
+
 （2）constructor属性：
 + 可以识别对象是否属于某个类。
 + 缺点是：在客户端多窗口多框架子页面的web应用中兼容性不佳，一个框架页面中的数组不是另一个框架页面的Array()构造函数的实例，instanceof运算结果是false。
+
 （3）构造函数的名称
 + 鉴于instanceof运算符和constructor属性的缺点，可以使用构造函数的名字而不是构造函数本身作为类标识符。但是也存在不足：并不是所有对象都有constructor属性，并不是多有函数都由名字。
+
 （4）鸭式辩型
 + 不要关注“对象的类是什么”，而是管制“对象能做什么”。
     + “像鸭子一样走路、游泳并且嘎嘎叫的鸟就是鸭子！”
