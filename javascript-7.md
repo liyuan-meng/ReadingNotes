@@ -24,7 +24,7 @@ var strict = (function(){return !this;}());
 o.m(x,y)
 ```
 或者
-```javascript
+```JavaScript
 o['m'](x,y)
 ```
 + 方法调用的上下文是调用该方法的对象。
