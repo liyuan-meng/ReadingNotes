@@ -294,7 +294,7 @@ HTML元素 | 描类型属性 | 时间处理程序 | 描述和事件
 \<input type="text">|"text"|onchange|单行文本输入域，缺省type时的默认元素
 \<textarea>|"textarea"|onchange|多行文本输入域
 
-#####（1）选取表单和表单元素
+##### （1）选取表单和表单元素
 + 使用getElementById()等标准方法
 + 使用document.querySelectorAll()
 + 使用属性，例如，名字为"address"的表单的第一个元素的name是"street"可以用以下方法选该元素
