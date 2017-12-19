@@ -93,12 +93,14 @@ document.body.atttributes.bgcolor  //body元素的bgcolor属性
 document.body.attributes["ONLOAD"]  //body元素的onload属性
 ```
 #### 5.元素的内容
+
 （1）作为HTML的元素内容
 + innerHTML属性
 + outerHtml属性:返回的HTML或XML标记的字符串包含被查询元素的开头和结尾标签
 + insertAdjacentHTML()：将任意HTML标记字符串插入到指定的元素相邻的位置。
     + 第一个参数："beforebegin"、"afterbegin"、"beforeend"、"afterend";
     + 第二个参数：指定插入的标记字符串
+
 （2）作为纯文本的元素内容
 + 使用Node的textContent属性来实现：
     + 除了IE的所有当前浏览器都支持；
@@ -110,6 +112,7 @@ var para = document.getElementByTagName("p")[0];
 var text = para.textContent;
 para.textContent = "hello world";
 ```
+
 （3）创建、插入和删除节点
  + 创建节点
     + document.createTextNode()
@@ -129,6 +132,7 @@ var newnode = document.createTextNode("text node content");
 + 删除和替换节点
     + removeChild()：在父节点上调用，将删除的子节点作为参数:n.parentNode.removeChild(n);
     + replaceChild():删除一个子节点并用一个新的节点取而代之，在父节点上调用：n.parentNode.replaceChild(document.createTextNode("[REDACTED]"), n);
+
 （4）使用DocumentFragment
 + 是一种特殊的Node，它作为其它节点的一个临时的容器。
 + 它是独立的，不是任何其他文档的一部分，它的parentNode总是null。但是类似Element，可以有任意多的子节点，可以用appendChlid()等方法来操作它们。
@@ -137,8 +141,218 @@ var newnode = document.createTextNode("text node content");
 var frag = document.createDocumentFragment();
 ```
 #### 6. 文档和元素的集合形状和滚动
-（1）文档坐标和视口坐标
+##### （1）文档坐标和视口坐标
++ 坐标系原点：
+    + 文档坐标：相对于文档的左上角；文档坐标在用户滚动的时候不会变化。
+    + 视口坐标：相对于其中显示文档的视口的左上角。鼠标指针的坐标是视口坐标。
+    + 两种坐标系之间相互转换，需要加上或减去滚动的偏移量。 
++ 查询窗口滚动条的位置
+```javascript
+function getScrollOffsets (w) {
+    //使用指定的窗口，如果不带参数则使用当前窗口
+    w = w || window;
+    //除了IE8以及更早的浏览器，其他浏览器都能用
+    if(w.pageXOffset != null) {
+        return{
+            x: w.pageXOffset,
+            y: w.pageYOffset
+        };
+    }
+    //对于标准模式下的IE
+    if(document.compatMode) {
+        return {
+            x: w.document.documentElement.scrollLeft,
+            y: w.document.documentElement.scrollTop
+        };
+    }
+    //怪异模式下的浏览器
+    return {
+        x: w.document.body.scrollLeft,
+        y: w.document.body.scollTop
+    };
+}
+```
++ 查询窗口的视口尺寸（当前工作区）
+```javascript
+function getViewportSize (w) {
+    //使用指定的窗口，如果不带参数则使用当前窗口
+    w = w || window;
+    //除了IE8以及更早的浏览器，其他浏览器都能用
+    if(w.innerWidth != null) {
+        return{
+            x: w.innerWidth,
+            y: w.innerHeight
+        };
+    }
+    //对于标准模式下的IE
+    if(document.compatMode) {
+        return {
+            x: w.document.documentElement.cilentWidth,
+            y: w.document.documentElement.clientHeight
+        };
+    }
+    //怪异模式下的浏览器
+    return {
+        x: w.document.body.cilentWidth,
+        y: w.document.body.clientHeight
+    };
+}
+```
+##### （2）查询元素的几何尺寸
++ getBoundingClientRect():
+    + 兼容所有浏览器;
+    + 没有参数;
+    + 返回一个有left（左上角X）,top（左上角Y）,right（右下角X）,bottom（右下角Y）属性的对象。还有height和width属性，但是在原始的IE中没有实现。
+    + 这个对象中属性的位置是相对于视口坐标的。
+    + 返回的坐标包含元素的边框和内边距，不包括外边距。
++ getClientRect():
+    + 查询内联元素每个独立的矩形
+    + 返回一个只读的类数组对象，它的每个元素类似于getBoundingClientRect()返回对象的元素。
++ 注意：这两种方法返回的结果不是实时的，用户滚动浏览器或者改变窗口大小的时候不会更新它们。
++ 获得元素在文档坐标中的坐标：
+```javascript
+var box = e.getBoundingClientRect();
+var offsets = getScrollOffsets();
+var x = box.left + offset.x;
+var y = box.top + offset.y;
+```
++ 计算元素的width和height
+```javascript
+var box = e.getBoundingClientRect();
+var w = box.width || box.right - box.left;
+var h = box.height || box.bottom - bottom.top;
+```
+##### （3）判定元素在某点
++ document.elementFormPoint():
+    + 传递X和Y坐标（使用视口坐标）
+    + 返回指定位置的一个元素（改点最里面和最外面的坐标）
+    + 如果指定的点在视口之外，将返回null
+##### （4）滚动
++ scrollBy(0, 10)(window的方法):在当前滚动条的偏移量上水平不变，垂直增加10
++ scroll()(window的方法)
++ scrollTo(0, 10)(window的方法):当前滚动条的偏移量上水平偏移量变为0，垂直偏移量变为10
+##### （5）关于元素尺寸、位置和溢出的更多信息
++ offsetLeft和offsetTop:
+    + 所有HTML元素拥有这两个属性返回元素的X和Y坐标
+    + 对于已定位的后代元素，这两个属性返回的坐标是相对于祖先元素而非文档。
+    + 因此使用offsetLeft好offsetRight来计算元素e的位置需要循环，如果e的offsetParent为null这些属性就都是文档坐标。
+```javascript
+function getElementPosition(e) {
+    var x = 0,y = 0;
+    while(e != null) {
+        x += e.offsetLeft;
+        y += e.offsetTop;
+        e = e.offsetParent;
+    }
+    return{x: x,y: y};
+}
+```
++ clientWidth和clientHeight属性：
+    +  HTML属性
+    + 只包含内容和内边距，不包括边框；
+    + 如果在内边距和边框之间天剑了滚动条，两个属性的返回值也不包含滚动条；
+    + 对于内联元素，两者都返回0。
+    + 在文档的根元素查询这些属性时，返回值和窗口的innerWidth和innerHeight相等。
++ offsetWidth和offsetHeight属性：
+    + HTML属性
+    + 和clientWidth和clientHeight属性相似，只是它包含边框
++ scrollWidth和SscrollHeight
+    + HTML元素
+    + 元素内容区+内边距+任何溢出内容的尺寸
+    + 当没有溢出时，和clientWidth和clientHeight相等。
++ scrollLeftscrollTop:
+    + HTML属性。
+    + 可写的，通过设置他们让元素中的内容滚动。
+    + HTML元素没有类似window的scrollTo方法。
++ 当文档包含滚动并且有内容溢出时，返回元素坐标
+```javascript
+function getElementPos(ele) {
+    var x = 0, y = 0;
+    for (var e = elt; e != null; e = e.offsetParent) {
+        x += e.scrollLeft;
+        y += e.scollTop;
+    }
+    for(var e = ele.parentNode; e != null; e = e.parentNode) {
+        x -= e.scrollLeft;
+        y -= e.scrollTop;
+    }
+    return {x: x,y: y};
+}
+```
+#### 7. HTML表单
+ 
+HTML元素 | 描类型属性 | 时间处理程序 | 描述和事件
+---|---|---|---
+<input type="button">或者<button type="button">| "button"|onclick|按钮
+<input type="checkbox">|"checkbox"|onchange|复选按钮
+<input type="file">|"file"|onchange|载入web服务器的文件的文件名输入域，value只读
+<option>|"none"|none|select对象中的单个选项，事件处理程序在select对象上，而非单独的option对象
+<input type="password">|"password"|onchange|密码输入框，输入的字符不可见
+<input type="reset">或<button type="reset">|"reset"|onclick|重置表单按钮
+<select>|"select-one"|onchange|选项只能单选的下拉菜单
+<select multiple>|"select-multiple"|onchange|选项可以多选的列表
+<input type="text">|"text"|onchange|单行文本输入域，缺省type时的默认元素
+<textarea>|"textarea"|onchange|多行文本输入域
 
+#####（1）选取表单和表单元素
++ 使用getElementById()等标准方法
++ 使用document.querySelectorAll()
++ 使用属性，例如，名字为"address"的表单的第一个元素的name是"street"可以用以下方法选该元素
+```javascript
+document.forms.address[0]
+document.forms.address.street 
+document.address.street
+```
++ 选取一个名字为shipping的表单元素的所有name为method的单选按钮
+```javascript
+var methods = document.forms.shipping.elements.method;//类数组
+```
+##### （2）表单和元素的属性
++ 多数表单元素通常有以下属性
+    + type
+    + form：对包含元素的Form对象的只读引用，如果不包含任何元素，值为null
+    + name:只读
+    + value：可读/写
+##### （3）表单和元素的事件处理程序
++ onsubmit():
+    + 侦测表单提交
+    + 表单提交前调用，通过返回false能够取消提交动作
+    + 通过单击“按钮”提交，直接调用表单的submit()方法不触发onsubmit事件处理程序
++ onreset()
+    + 表单重置之前调用，通过返回false可以阻止表单元素重置。
+    + 过单击“按钮”提交，直接调用表单的reset()方法不触发onreset事件处理程序
+
+##### （4）开关按钮checkbox和radio
++ 单选框和复选框：
+    + checked属性，可读/写的布尔值
+    + defaultChecked属性，布尔值，元素第一次加载页面时是否选中
+    + 设置value只改变提交表单时发送到web服务器的字符串
+    + onchange事件和onclick事件
+##### （5）文本域text、textarea、password、file
++ onchange事件：用户完成编辑并且将焦点移出了文本域
++ 从onkeypress或者onkeydown事件处理程序返回false，防止记录用户的按键
+#### （7）选择框和选项元素select
++ onchange事件
++ 每个Option对象有一个text属性，指定了select元素中的选项所显示的纯文本字符串；value属性制定了提交表单发送到web服务器的文本字符串，它是可读/写的
++ 通过设置options.length可以从Select元素中溢出所有选项，设置options[]数组中某点null删除某个单独Option对象
+#### 8. 其他文档特性
+（1）Document的属性
++ body、documentElement、forms等特殊文档元素
++ cookie
++ domain: 该属性允许当web页面之间交互的时候，相同域名下相互信任的web服务器之间协作放宽同源策略安全限制
++ lastModified:包含文档修改时间的字符串
++ location:与Window对象的location属性引用同一个Location对象
++ referrer:如果有，它表示浏览器导航到当前链接的上一个文档，该属性值和HTTP的Referer头信息的内容相同
++ title:文档的<title></title>标签之间的内容
++ URL：文档的URL，只读字符串，该属性值和location.href的初始值相同，但是不会发生动态变化。
+（2）document.write()方法：将字符串连接起来，然后将结果字符串插入到文档中调用它的脚本元素的位置
+（3）查询选取的文本
++ window.getSelection().toString():HTML5标准API
++ document.selection.createRange().text:IE特有的技术
+（4）可编辑的内容
++ 给元素标签设置contenteditable可以创建一个可编辑的区域
++ 给元素添加spellcheck属性显示开启拼写检查，使用sepllcheck=false可以显示关闭该功能
++ Document对象的designMode属性设置为字符串"on"使得整个文档可编辑
 
 
 
