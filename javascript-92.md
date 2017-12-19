@@ -283,16 +283,16 @@ function getElementPos(ele) {
  
 HTML元素 | 描类型属性 | 时间处理程序 | 描述和事件
 ---|---|---|---
-<input type="button">或者<button type="button">| "button"|onclick|按钮
-<input type="checkbox">|"checkbox"|onchange|复选按钮
-<input type="file">|"file"|onchange|载入web服务器的文件的文件名输入域，value只读
-<option>|"none"|none|select对象中的单个选项，事件处理程序在select对象上，而非单独的option对象
-<input type="password">|"password"|onchange|密码输入框，输入的字符不可见
-<input type="reset">或<button type="reset">|"reset"|onclick|重置表单按钮
-<select>|"select-one"|onchange|选项只能单选的下拉菜单
-<select multiple>|"select-multiple"|onchange|选项可以多选的列表
-<input type="text">|"text"|onchange|单行文本输入域，缺省type时的默认元素
-<textarea>|"textarea"|onchange|多行文本输入域
+\<input type="button">或者\<button type="button">| "button"|onclick|按钮
+\<input type="checkbox">|"checkbox"|onchange|复选按钮
+\<input type="file">|"file"|onchange|载入web服务器的文件的文件名输入域，value只读
+\<option>|"none"|none|select对象中的单个选项，事件处理程序在select对象上，而非单独的option对象
+\<input type="password">|"password"|onchange|密码输入框，输入的字符不可见
+\<input type="reset">或\<button type="reset">|"reset"|onclick|重置表单按钮
+\<select>|"select-one"|onchange|选项只能单选的下拉菜单
+\<select multiple>|"select-multiple"|onchange|选项可以多选的列表
+\<input type="text">|"text"|onchange|单行文本输入域，缺省type时的默认元素
+\<textarea>|"textarea"|onchange|多行文本输入域
 
 #####（1）选取表单和表单元素
 + 使用getElementById()等标准方法
