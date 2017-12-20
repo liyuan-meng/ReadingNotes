@@ -255,25 +255,25 @@ function getElementPosition(e) {
 ```
 
 （2）clientWidth和clientHeight属性：
-    +  HTML属性
-    + 只包含内容和内边距，不包括边框；
-    + 如果在内边距和边框之间天剑了滚动条，两个属性的返回值也不包含滚动条；
-    + 对于内联元素，两者都返回0。
-    + 在文档的根元素查询这些属性时，返回值和窗口的innerWidth和innerHeight相等。
++  HTML属性
++ 只包含内容和内边距，不包括边框；
++  如果在内边距和边框之间天剑了滚动条，两个属性的返回值也不包含滚动条；
++ 对于内联元素，两者都返回0。
++ 在文档的根元素查询这些属性时，返回值和窗口的innerWidth和innerHeight相等。
 
 （3）offsetWidth和offsetHeight属性：
-    + HTML属性
-    + 和clientWidth和clientHeight属性相似，只是它包含边框
++ HTML属性
++ 和clientWidth和clientHeight属性相似，只是它包含边框
 
 （4）scrollWidth和SscrollHeight
-    + HTML元素
-    + 元素内容区+内边距+任何溢出内容的尺寸
-    + 当没有溢出时，和clientWidth和clientHeight相等。
++ HTML元素
++ 元素内容区+内边距+任何溢出内容的尺寸
++ 当没有溢出时，和clientWidth和clientHeight相等。
 
 （5）scrollLeftscrollTop:
-    + HTML属性。
-    + 可写的，通过设置他们让元素中的内容滚动。
-    + HTML元素没有类似window的scrollTo方法。
++ HTML属性。
++ 可写的，通过设置他们让元素中的内容滚动。
++ HTML元素没有类似window的scrollTo方法。
 
 （6）当文档包含滚动并且有内容溢出时，返回元素坐标
 ```javascript
