@@ -399,7 +399,7 @@ var n=str.match(/ain/gi);
 undefined null 0 -0 NaN ""(空字符串)
 ```
 所有其他值，包括所有对象（数组）都会转换成true。
-#### 3.布尔值包含toString()方法，因此可以使用这个方法将字符串转换成"true"或者"false".
+#### 3.布尔值包含toString()方法，因此可以使用这个方法将字符串转换成"true"或"false"。
 #### 4.三个重要的布尔运算符
 ```
 && || !
