@@ -451,5 +451,4 @@ function classof(o){
 (1) toString()方法:返回一个表示调用这个方法的对象值的字符串
 (2) toJSON()方法：Object.prototype中没有定义这个方法，但是JSON.stringify()方法会调用这个方法。
 (3) valueOf()方法：当JavaScript需要将对象转换为某种原始值而非字符串的时候才会调用它。
-(4)
    
