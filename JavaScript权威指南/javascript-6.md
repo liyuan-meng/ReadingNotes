@@ -5,7 +5,7 @@
 var arr = [1,[3,4,5],3];
 ```
 （2）调用构造函数Array创建。
-+ 无参数
++ 无参数。
 ```javascript 1.5
 var a = new Array();
 ```
