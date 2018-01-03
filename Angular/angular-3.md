@@ -35,30 +35,31 @@
 
 ```html
 <!doctype html>
-<html ng-app>
-  <head>
-    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
+<html ng-app="myapp">
+<head>
+    <script src="angular.js"></script>
     <script src="script.js"></script>
-  </head>
-  <body>
-    <div ng-controller="MyController">
-      Your name:
-        <input type="text" ng-model="username">
-        <button ng-click='sayHello()'>greet</button>
-      <hr>
-      
-    </div>
-  </body>
-</html>
+</head>
+<body>
+<div ng-controller="MyController as ctrl">
+    Your name:
+    <input type="text" ng-model="ctrl.username">
+    <button ng-click='ctrl.sayHello()'>greet</button>
+    <hr>
+
+</div>
+</body>
+</html> 
 ```
 ```js
-function MyController($scope) {
-  $scope.username = 'World';
- 
-  $scope.sayHello = function() {
-    $scope.greeting = 'Hello ' + $scope.username + '!';
-  };
-}
+angular.module("myapp",[])
+    .controller("MyController", function () {
+    this.username = "World";
+    this.sayHello = function() {
+        this.greeting = 'Hello ' + this.username + '!';
+        window.alert(this.greeting);
+    };
+});
 ```
 (1) 从视图的角度看:
 
@@ -102,38 +103,41 @@ Angular需要经历取值和计算两个阶段才能最终在视图渲染结果�
 
 ```html
 <!doctype html>
-<html ng-app>
-  <head>
-    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
+<!doctype html>
+<html ng-app="myapp">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
     <script src="script.js"></script>
-  </head>
-  <body>
-    <div ng-controller="EventController">
-      Root作用域<tt>MyEvent</tt> count: 
-      <ul>
+</head>
+<body>
+<div ng-controller="EventController">
+    <h3>Root作用域 MyEvent  count:</h3>
+    <ul>
         <li ng-repeat="i in [1]" ng-controller="EventController">
-          <button ng-click="$emit('MyEvent')">$emit('MyEvent')</button>
-          <button ng-click="$broadcast('MyEvent')">$broadcast('MyEvent')</button>
-          <br>
-          Middle作用域<tt>MyEvent</tt> count: 
-          <ul>
-            <li ng-repeat="item in [1, 2]" ng-controller="EventController">
-              Leaf作用域<tt>MyEvent</tt> count: 
-            </li>
-          </ul>
+            <button ng-click="$emit('MyEvent')">$emit('MyEvent')</button>
+            <button ng-click="$broadcast('MyEvent')">$broadcast('MyEvent')</button>
+            <br>
+            <h4>Middle作用域 MyEvent count:</h4>
+            <ul>
+                <li ng-repeat="item in [1, 2, 3]" ng-controller="EventController">
+                    <h6>Leaf作用域 MyEvent count:</h6>
+                </li>
+            </ul>
         </li>
-      </ul>
-    </div>
-  </body>
+    </ul>
+</div>
+</body>
 </html>
 ```
 ```js
-function EventController($scope) {
-  $scope.count = 0;
-  $scope.$on('MyEvent', function() {
-    $scope.count++;
-  });
-}
+angular.module("myapp",[])
+    .controller("EventController", function ($scope) {
+        $scope.count = 0;
+        $scope.$on('MyEvent', function() {
+            alert(++ $scope.count);
+        });
+    });
 ```
 
 + $scope 中有$emit 和 $broadcast方法，因此可以写在 html 模版中。

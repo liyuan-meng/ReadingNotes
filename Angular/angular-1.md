@@ -75,57 +75,60 @@
 ### 三、添加UI逻辑：控制器
 ```html
 <!doctype html>
-<html ng-app="invoice1">
-  <head>
-    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
-    <script src="invoice1.js"></script>
-  </head>
-  <body>
-    <div ng-controller="InvoiceController as invoice">
-      <b>订单:</b>
-      <div>
+<html lang="en" ng-app="invoice1">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+<div ng-controller="InvoiceController as invoice">
+    <b>订单:</b>
+    <div>
         数量: <input type="number" ng-model="invoice.qty" required >
-      </div>
-      <div>
+    </div>
+    <div>
         单价: <input type="number" ng-model="invoice.cost" required >
         <select ng-model="invoice.inCurr">
-          <option ng-repeat="c in invoice.currencies"></option>
+            <option ng-repeat="c in invoice.currencies">{{c}}</option>
         </select>
-      </div>
-      <div>
-        <b>总价:</b>
-        <span ng-repeat="c in invoice.currencies">
-          
-        </span>
         <button class="btn" ng-click="invoice.pay()">支付</button>
-      </div>
     </div>
-  </body>
+    <div>
+        <b>总价:</b>
+        <span ng-repeat="(key, value) in invoice.usdToForeignRates">
+            {{key}}: {{value.total}}
+        </span>
+    </div>
+</div>
+</body>
 </html>
 ```
 ```javascript
 angular.module('invoice1', [])
-  .controller('InvoiceController', function() {
-    this.qty = 1;
-    this.cost = 2;
-    this.inCurr = 'EUR';
-    this.currencies = ['USD', 'EUR', 'CNY'];
-    this.usdToForeignRates = {
-      USD: 1,
-      EUR: 0.74,
-      CNY: 6.09
-    };
- 
-    this.total = function total(outCurr) {
-      return this.convertCurrency(this.qty * this.cost, this.inCurr, outCurr);
-    };
-    this.convertCurrency = function convertCurrency(amount, inCurr, outCurr) {
-      return amount * this.usdToForeignRates[outCurr] * 1 / this.usdToForeignRates[inCurr];
-    };
-    this.pay = function pay() {
-      window.alert("谢谢！");
-    };
-  });
+    .controller('InvoiceController', function() {
+        this.qty = 1;
+        this.cost = 2;
+        this.inCurr = 'EUR';
+        this.currencies = ['USD', 'EUR', 'CNY'];
+        this.usdToForeignRates = {
+            USD: {rate: 1, total: 1},
+            EUR: {rate: 0.74, total: 1},
+            CNY: {rate: 0.69, total: 1}
+        };
+
+        this.total = function total() {
+            for(var item in this.usdToForeignRates) {
+                this.usdToForeignRates[item].total = this.convertCurrency(this.qty * this.cost,item, this.inCurr).toFixed(3);
+            }
+        };
+        this.convertCurrency = function convertCurrency(amount, inCurr, outCurr) {
+            return amount * this.usdToForeignRates[outCurr].rate / this.usdToForeignRates[inCurr].rate;
+        };
+        this.pay = function pay() {
+            this.total(this.inCurr);
+        };
+    });
 ```
 
 1. 控制器函数所在的文件定义了一个构造函数，它用来在将来真正需要的时候创建这个控制器函数的实例。
@@ -141,39 +144,38 @@ angular.module('invoice1', [])
 ```js
 // finance.js
 angular.module('finance', [])
-  .factory('currencyConverter', function() {
-    var currencies = ['USD', 'EUR', 'CNY'],
-        usdToForeignRates = {
-          USD: 1,
-          EUR: 0.74,
-          CNY: 6.09
+    .factory('currencyConverter', function() {
+        return {
+            convertCurrency: convertCurrency
         };
-    return {
-      currencies: currencies,
-      convert: convert
-    };
- 
-    function convert(amount, inCurr, outCurr) {
-      return amount * usdToForeignRates[outCurr] * 1 / usdToForeignRates[inCurr];
-    }
-  });
+        function convertCurrency(amount, inCurrRate, outCurrRate) {
+            return amount * outCurrRate / inCurrRate;
+        }
+    });
   ```
   ```js
-// invoicve2.js
-angular.module('invoice', ['finance'])
-  .controller('InvoiceController', function(currencyConverter) {
-    this.qty = 1;
-    this.cost = 2;
-    this.inCurr = 'EUR';
-    this.currencies = currencyConverter.currencies;
- 
-    this.total = function total(outCurr) {
-      return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
-    };
-    this.pay = function pay() {
-      window.alert("谢谢！");
-    };
-  });
+// invoicve1.js
+angular.module('invoice1', ['finance'])
+    .controller('InvoiceController', function(currencyConverter) {
+        this.qty = 1;
+        this.cost = 2;
+        this.inCurr = 'EUR';
+        this.currencies = ['USD', 'EUR', 'CNY'];
+        this.usdToForeignRates = {
+            USD: {rate: 1, total: 1},
+            EUR: {rate: 0.74, total: 1},
+            CNY: {rate: 0.69, total: 1}
+        };
+
+        this.total = function total() {
+            for(var item in this.usdToForeignRates) {
+                this.usdToForeignRates[item].total = currencyConverter.convertCurrency(this.qty * this.cost,this.usdToForeignRates[item].rate, this.usdToForeignRates[this.inCurr].rate).toFixed(3);
+            }
+        };
+        this.pay = function pay() {
+            this.total();
+        };
+    });
   ```
 
 1. 为了使应用程序的规模继续成长，最好的做法是：把控制器中与视图无关的逻辑都移到"服务(service)"中。 以便这个应用程序的其他部分也能复用这些逻辑。
