@@ -108,7 +108,7 @@
 
 4. ng-pristine, ng-dirty：angular的input指令给所有新的、还没有与用户交互的input元素附加上ng-pristine类，当用户有任何输入时，则附加上 ng-dirty.
 
-## 第九章 AngularJS 过滤器（Filters）
+## 第十章 AngularJS 过滤器（Filters）
 
 ### 一、在模板中使用过滤器
 
