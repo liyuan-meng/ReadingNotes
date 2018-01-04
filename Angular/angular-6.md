@@ -1,5 +1,8 @@
 ## 第十二章 AngularJS 指令(Directives)
 
+> https://docs.angularjs.org/guide/directive
+> http://www.angularjs.net.cn/tutorial/5.html
+
 ### 一、指令定义
 
 + 指令就是一些附加在HTML元素上的自定义标记（例如：属性，元素，或css类），它告诉AngularJS的HTML编译器 ($compile) 在元素上附加某些指定的行为，甚至操作DOM、改变DOM元素，以及它的各级子节点。当Angular 启动器引导应用程序时， HTML编译器就会遍历整个DOM，以匹配DOM元素里的指令。
@@ -288,7 +291,7 @@ angular.module('docsIsolationExample', [])
 
 ### 5. 创建包含其他元素的指令
 
-+ 仅当要创建一个包裹任意内容的指令的时候使用transclude: true。
+#### (1)仅当要创建一个包裹任意内容的指令的时候使用transclude: true。
 
 ```html
 <!doctype html>
@@ -335,9 +338,117 @@ link: function(scope) {
 ```
 那么输出将会是Jeff，因为指令和外部共享同一个作用域。如果加上scope:{}，那么指令创建了自己的作用域，不会对外部产生影响，输出依然是Tobias。
 
+#### (2)当指令想要开放一个API去绑定特定的行为，在scope选项中使用&prop。
 
+```html
+<!doctype html>
+<html ng-app="docsIsoFnBindExample">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+<div ng-controller="Controller">
+    {{message}}
+    <my-dialog ng-hide="dialogIsHidden" on-close="hideDialog(message)">
+        Check out the contents, {{name}}!
+    </my-dialog>
+</div>
+</body>
+</html>
+```
+```html
+<!-- my-customer.html -->
+<div class="alert">
+    <a href class="close" ng-click="close({message: 'closing for now'})">&times;</a>
+    <div ng-transclude></div>
+</div>
+```
+```js
+//script.js
+angular.module('docsIsoFnBindExample', [])
+    .controller('Controller', ['$scope', '$timeout', function($scope, $timeout) {
+        $scope.name = 'Tobias';
+        $scope.message = '';
+        $scope.hideDialog = function(message) {
+            $scope.message = message;
+            $scope.dialogIsHidden = true;
+            $timeout(function() {
+                $scope.message = '';
+                $scope.dialogIsHidden = false;
+            }, 2000);
+        };
+    }])
+    .directive('myDialog', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            scope: {
+                'close': '&onClose'
+            },
+            templateUrl: 'my-customer.html'
+        };
+    });
+```
++ 我们想要通过在指令的作用域上调用我们传进去的函数hideDialog(message)，但是这个函数本该运行在定义时候的上下文。在上文的例子中， 我们使用了&prop ，& 绑定了一个函数到独立作用域， 允许独立作用域调用它，同时保留了原来函数的作用域(这里的作用域都是指$scope)。 所以当一个用户点击x时候，就会运行Ctrl控制器的close函数。
+  
+#### 6.创建一个带事件监听器的指令
+```html
+<!doctype html>
+<html ng-app="dragModule">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+<span my-draggable>Drag Me</span>
+</body>
+</html>
+```
+```js
+<!-- 实现一个可拖拽的span -->
+angular.module('dragModule', [])
+    .directive('myDraggable', ['$document', function($document) {
+        return {
+            link: function(scope, element, attr) {
+                var startX = 0, startY = 0, x = 0, y = 0;
 
+                element.css({
+                    position: 'relative',
+                    border: '1px solid red',
+                    backgroundColor: 'lightgrey',
+                    cursor: 'pointer'
+                });
 
+                element.on('mousedown', function(event) {
+                    // Prevent default dragging of selected content
+                    event.preventDefault();
+                    startX = event.pageX - x;
+                    startY = event.pageY - y;
+                    $document.on('mousemove', mousemove);
+                    $document.on('mouseup', mouseup);
+                });
+
+                function mousemove(event) {
+                    y = event.pageY - startY;
+                    x = event.pageX - startX;
+                    element.css({
+                        top: y + 'px',
+                        left:  x + 'px'
+                    });
+                }
+
+                function mouseup() {
+                    $document.off('mousemove', mousemove);
+                    $document.off('mouseup', mouseup);
+                }
+            }
+        };
+    }]);
+```
+#### 7.创建可以通信的指令
 
 
 
