@@ -2,7 +2,7 @@
 
 > http://www.angularjs.net.cn/tutorial/12.html
 
-+ 是一个存储应用数据模型的对象
++ 作用域是一个存储应用数据模型的对象
 
 + 为 表达式 提供了一个执行上下文
 
