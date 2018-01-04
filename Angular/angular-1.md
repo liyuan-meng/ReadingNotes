@@ -18,9 +18,9 @@
 
 2. Angular在初始化时找到 ng-app 指令，会做下面几件事：
 
-+ 加载 ng-app 指令所指定的 模块；
++ 加载 ng-app 指令所指定的 模块。
 
-+ 创建应用所需的 injector；
++ 创建应用所需的 injector。
 
 + 以 ng-app 所在的节点为根节点，开始遍历并编译DOM树（ng-app 指出了应用的哪一部份开始时 Angular 去编译的）。
 
