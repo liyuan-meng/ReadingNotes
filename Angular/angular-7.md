@@ -126,10 +126,38 @@ var myapp=angular.module('myapp',[])
 
 3.隔离scope(scope:{}) – 这就像一个沙箱！当你创建的指令是自包含的并且可重用的，你就需要使用这种scope。你在指令中会创建很多scope属性和方法，它们仅在指令内部使用，永远不会被外部的世界所知晓。如果是这样的话，隔离的scope是更好的选择。隔离的scope不会继承父scope。
 
+### 六、组件通信（controller）
 
+controller[string or function]和require[string or string[]]参数,当我们想要允许其他的指令和你的指令发生交互时，我们就需要使用 controller 函数。当另一个指令想要交互时，它需要声明它对你的指令 controller 实例的引用(require)。
 
-
-
+```js
+.directive('hello', function () {
+   return{
+    scope:{},
+    require:'^he',
+    compile: function (element,attrs) {
+     return function (scope,elements,attrs,cntIns) {
+      cntIns.fn()
+     };
+    }
+   }
+  })
+  .directive('he', function () {
+   return {
+    restrict:'AE',
+    scope:{},
+    controller: function ($scope, $compile, $http) {
+     this.fn= function () {
+      alert('hello');
+     };
+    }
+   }
+  })
+<he>
+ <hello color="color" sayhello="sayhello()"></hello>
+</he>
+```
++ 当页面加载完毕之后，会弹出一个对话框,显示hello。
 
 
 
