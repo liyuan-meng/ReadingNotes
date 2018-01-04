@@ -451,6 +451,82 @@ angular.module('dragModule', [])
 #### 7.创建可以通信的指令
 
 
+## 第十三章 组件
+
+> https://docs.angularjs.org/guide/component
+
++ 组件的优点：
+  + 比指令的配置更加简单
+  + 提供更好的默认设置和最好的实践
+  + 优化架构
+  + 编写组件指令更易于angular升级
++ 什么时候使用组件：
+  + 对那些在 compile或者pre-link阶段要执行操作的指令，组件不能用，因为无法到达那个阶段
+  + 如果你想定义指令的  priority，terminal，multi-element，也不能用。
+  + 当你想要一个由属性或CSS类触发的指令，而不是一个元素
+
+### 一、创建和配置组件
+
++ 使用.component()方法注册，这个方法有两个参数：组件名称和组件配置对象（和指令的区别，一个是工厂方法，一个是对象）
+```html
+<!-- index.html -->
+<!doctype html>
+<html ng-app="heroApp">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
+    <script src="index.js"></script>
+    <script src="heroDetail.js"></script>
+</head>
+<body>
+<div ng-controller="MainCtrl as ctrl">
+    <b>Hero</b><br>
+    <hero-detail hero="ctrl.hero2"></hero-detail>
+</div>
+</body>
+</html>
+```
+```html
+<!-- heroDetail.html -->
+<span>Name: {{$ctrl.hero.name}}</span>
+```
+```js
+//index.js
+angular.module('heroApp', []).controller('MainCtrl', function MainCtrl() {
+  this.hero = {
+    name: 'Spawn'
+  };
+});
+```
+```
+//heroDetail.js
+angular.module('heroApp').component('heroDetail', {
+  templateUrl: 'heroDetail.html',
+  bindings: {
+    hero: '='
+  }
+});
+```
+### 二、基于组件的应用程序架构
+
++ 组件只控制视图和数据：组件永远不应该修改作用域之外的DOM或数据。在angular中可以任意修改任何地方的数据，因为scope是原型继承和观察的。这个是实践出来的，但是，导致的问题是你根本不清楚程序中哪一部分负责修改数据。
+
++ 组件有一个定义很好的公共api--输入和输出。然而隔离的作用域能力有限，因为angular使用双向绑定。所以如果你传递一个对象到组件，用这种方式bindings:{item:'='}，修改一个属性，这个改变就会反射到父级组件里面。对组件来说，只有组件自己的数据自己才能修改，这样数据一旦修改，就可以很容易找到是谁修改的。基于这个原因，组件应该遵循一些简单的规范：输入应该使用 < 和 @ bindings. <表示单向绑定，和 = 的区别是单向绑定的不被watch。这样，你在内部修改的属性不会更新父级scope。普遍的规则是永远不要改变scope中的对象或者数组属性。@bindings 用在输入时字符串，尤其是这个值不会改变的情况。
+```js
+bindings:{
+  hero: '<',
+  comment: '@'
+}
+```
+输入 & 符号绑定。来应用外部回调函数:
+```js
+bindings:{
+  onDelete: '&',
+  onUpdate: '&'
+}
+```
+
+
 
 
 
