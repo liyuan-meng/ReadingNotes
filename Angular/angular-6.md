@@ -17,7 +17,7 @@ Hello <input ng-model='name'> <hr/>
 <span data-ng-bind="name"></span> <br/>
 <span x-ng-bind="name"></span> <br/>
 ```
-
+  
 2. 指令形式：元素名、属性、类名和注释，最好通过标签名和属性来使用指令而不要通过注释和类名。
 
 ```html
@@ -60,6 +60,36 @@ Hello <input ng-model='name'> <hr/>
 + 注意：最好前缀化自定义的指令名字，以避免同名冲突。
 
 #### 1. 例子1
+```html
+<!doctype html>
+<html ng-app="docsSimpleDirective">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+<div ng-controller="Ctrl">
+    <div my-customer></div>
+</div>
+</body>
+</html>
+```
+```js
+angular.module('docsSimpleDirective', [])
+    .controller('Ctrl', function ($scope) {
+        $scope.customer = {
+            name: 'Naomi',
+            address: '1600 Amphitheatre'
+        };
+    })
+    .directive("myCustomer", function () {
+        return {
+            template: "<p>姓名：{{this.customer.name}} 地址：{{this.customer.address}}</p>"
+        }
+    });
+```
+
 
 
 
