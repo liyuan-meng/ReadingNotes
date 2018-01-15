@@ -108,7 +108,7 @@
 
 4. ng-pristine, ng-dirty：angular的input指令给所有新的、还没有与用户交互的input元素附加上ng-pristine类，当用户有任何输入时，则附加上 ng-dirty.
 
-## 第九章 AngularJS 过滤器（Filters）
+## 第十章 AngularJS 过滤器（Filters）
 
 ### 一、在模板中使用过滤器
 
@@ -133,11 +133,11 @@
     <div ng-controller="FilterController as ctrl">
       <div>
         All entries:
-        <span ng-repeat="entry in ctrl.array">{{entry.name}} </span>
+        <p ng-repeat="entry in ctrl.array">{{entry.name}} </p>
       </div>
       <div>
         Entries that contain an "a":
-        <span ng-repeat="entry in ctrl.filteredArray">{{entry.name}} </span>
+        <p ng-repeat="entry in ctrl.filteredArray">{{entry.name}} </p>
       </div>
     </div>
   </body>
@@ -172,39 +172,45 @@ angular.module('FilterInControllerModule', []).
 2. 例子：
 
 ```html
-<!doctype html>
-<html ng-app="MyReverseModule">
-  <head>
-    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div ng-controller="Ctrl">
-      <input ng-model="greeting" type="text"><br>
-      未添加过滤器: {{greeting}}<br>
-      逆置: {{greeting|reverse}}<br>
-      逆置 + 大写: {{greeting|reverse:true}}<br>
-    </div>
-  </body>
+<!DOCTYPE html>
+<html lang="en" ng-app="myReverseFilterApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="angular.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div ng-controller="MyController as Ctrl">
+    <input ng-model="Ctrl.greeting" type="text"><br>
+    未添加过滤器: {{Ctrl.greeting}}<br>
+    逆置: {{Ctrl.greeting|reverse}}<br>
+    逆置 + 大写: {{Ctrl.greeting|reverse:true}}<br>
+  </div>
+</body>
 </html>
 ```
 
 ```js
 angular.module('myReverseFilterApp', [])
-.filter('reverse', function() {
-  return function(input, uppercase) {
-    input = input || '';
-    var out = '';
-    for (var i = 0; i < input.length; i++) {
-      out = input.charAt(i) + out;
-    }
-    // conditional based on optional argument
-    if (uppercase) {
-      out = out.toUpperCase();
-    }
-    return out;
-  };
-})
+.filter('reverse',[
+  function() {
+    return function(input, uppercase) {
+      input = input || '';
+      var out = '';
+      for (var i = 0; i < input.length; i++) {
+        out = input.charAt(i) + out;
+      }
+      // conditional based on optional argument
+      if (uppercase) {
+        out = out.toUpperCase();
+      }
+      return out;
+    };
+  }
+])
 .controller('MyController', ['$scope', 'reverseFilter', function($scope, reverseFilter) {
   $scope.greeting = 'hello';
   $scope.filteredGreeting = reverseFilter($scope.greeting);

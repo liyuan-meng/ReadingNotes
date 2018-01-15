@@ -1,4 +1,4 @@
-## 第十章 AngularJS 表单(Forms)
+## 第十一章 AngularJS 表单(Forms)
 
 > http://www.angularjs.net.cn/tutorial/4.html
 
@@ -11,51 +11,57 @@
 <!-- user.name 和 user.email 都是必需的（required），它们仅在成为脏数据(dirty)时才会显示红色背景，但不会在初始状态下（也为空）显示。
  -->
 
-<!doctype html>
-<html ng-app>
-  <head>
-    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div ng-controller="Controller">
-      <form novalidate class="css-form">
-        Name:
-          <input type="text" ng-model="user.name" required /><br />
-        邮箱: <input type="email" ng-model="user.email" required /><br />
-        性别: <label><input type="radio" ng-model="user.gender" value="male" />男</label>
-        <label><input type="radio" ng-model="user.gender" value="female" />女</label><br />
-        <button ng-click="reset()">重置</button>
-        <button ng-click="update(user)">保存</button>
-      </form>
-    </div>
-    
-    <style type="text/css">
-      .css-form input.ng-invalid.ng-dirty {
-        background-color: #FA787E; /*红色*/
-      }
-    
-      .css-form input.ng-valid.ng-dirty {
-        background-color: #78FA89;
-      }
-    </style>
-  </body>
+<!DOCTYPE html>
+<html lang="en" ng-app="myForm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="angular.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div ng-controller="MyController">
+    <form novalidate class="css-form">
+      Name:
+        <input type="text" ng-model="user.name" required /><br />
+      邮箱: <input type="email" ng-model="user.email" required /><br />
+      性别: <label><input type="radio" ng-model="user.gender" value="male" />男</label>
+      <label><input type="radio" ng-model="user.gender" value="female" />女</label><br />
+      <button ng-click="reset()">重置</button>
+      <button ng-click="update(user)">保存</button>
+    </form>
+  </div>
+  
+  <style type="text/css">
+    .css-form input.ng-invalid.ng-dirty {
+      background-color: #FA787E; /*红色*/
+    }
+  
+    .css-form input.ng-valid.ng-dirty {
+      background-color: #78FA89;
+    }
+  </style>
+</body>
 </html>
 ```
 
 ```js
-function Controller($scope) {
+angular.module('myForm', [])
+.controller('MyController', function($scope) {
   $scope.master = {};
- 
-  $scope.update = function(user) {
-    $scope.master = angular.copy(user);
-  };
- 
-  $scope.reset = function() {
-    $scope.user = angular.copy($scope.master);
-  };
- 
-  $scope.reset();
+  
+   $scope.update = function(user) {
+     $scope.master = angular.copy(user);
+   };
+  
+   $scope.reset = function() {
+     $scope.user = angular.copy($scope.master);
+   };
+  
+   $scope.reset();
+});
 }
 ```
 
@@ -68,14 +74,18 @@ function Controller($scope) {
 1. 保存按钮 只在表单有改变且数据有效的时候才可用‘
 1. 为 user.email 和 user.agree 自定义错误提示信息
  -->
-<!doctype html>
-<html ng-app>
+  <!DOCTYPE html>
+  <html lang="en" ng-app="myForm">
   <head>
-    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="angular.js"></script>
     <script src="script.js"></script>
   </head>
   <body>
-    <div ng-controller="Controller">
+    <div ng-controller="MyController">
       <form name="form" class="css-form" novalidate>
         Name:
           <input type="text" ng-model="user.name" name="uName" required /><br />
@@ -99,26 +109,33 @@ function Controller($scope) {
                 ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
       </form>
     </div>
+    <style type="text/css">
+       .css-form input.ng-invalid.ng-dirty {
+         background-color: #FA787E; /*红色*/
+       }
+
+       .css-form input.ng-valid.ng-dirty {
+         background-color: #78FA89;
+       }
+     </style>
   </body>
 </html>
 ```
 ```js
-function Controller($scope) {
+angular.module('myForm', [])
+.controller('MyController', function($scope) {
   $scope.master = {};
- 
-  $scope.update = function(user) {
-    $scope.master = angular.copy(user);
-  };
- 
-  $scope.reset = function() {
-    $scope.user = angular.copy($scope.master);
-  };
- 
-  $scope.isUnchanged = function(user) {
-    return angular.equals(user, $scope.master);
-  };
- 
-  $scope.reset();
+  
+   $scope.update = function(user) {
+     $scope.master = angular.copy(user);
+   };
+  
+   $scope.reset = function() {
+     $scope.user = angular.copy($scope.master);
+   };
+  
+   $scope.reset();
+});
 }
 ```
 
@@ -132,7 +149,7 @@ function Controller($scope) {
 
 + 视图到数据的更新
 
-3. 例子(好像有点问题，运行不了)
+3. 例子(暂时对指令的生命周期还不是很理解)
 
 ```html
 

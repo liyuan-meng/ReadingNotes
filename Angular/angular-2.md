@@ -40,7 +40,7 @@
 
 3. 将视图作为数据模型的一种映射，使得控制器完全与视图分离，而不必关心视图的展现。这使测试变得小菜一碟。
 
-## 第五章 AngularJS 控制器(Controllers)
+## 第五章 AngularJS 控制器(Controllers)和服务（Service）
 
 > http://www.angularjs.net.cn/tutorial/2.html
 
@@ -172,4 +172,52 @@ describe('state', function() {
     });
 });
 ```
+### 七、服务
+
+#### 1.使用factory()函数创建服务
+
+```js
+myModule.factory('$myService', funcion() {
+   var myService = {
+        foo.bar();
+   };
+   ·····
+   return myService;
+})
+```
++ factory()函数需要在代码中构造一个对象并返回。 
+
+#### 2.使用service()函数创建服务
+```js
+myModule.service('$myService', funcion() {
+   this.foo = "bar";
+})
+```
++ service()函数基本等同于factory()函数，不一样的是service()函数不需要返回一个新的对象，只要将属性附加到this上就可以。
++ service()函数是一项残留的技术，在使用this的时候一定要小心
++ 所有使用factory()函数注册的服务都可以使用service()函数注册，不必做任何改动，反之不一定成立。这是因为JavaScript构造器返回一个值，该值可能是对象或者数组，那么new操作符产生的结果对象就是这个值。
+
+#### 3.使用provider()函数创建服务。
+```js
+angular.module('myModule', []).config(['$provide', function($provide) {
+  $provide.factory('serviceId', function() {
+    var shinyNewServiceInstance;
+    // factory function body that constructs shinyNewServiceInstance
+    return shinyNewServiceInstance;
+  });
+}]);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
