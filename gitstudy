@@ -1,5 +1,5 @@
 1. 安装并打开gitbash
-```
+```bash
 git config --global user.name "13149260506@163.com"
 git config --global user.email 13149260506@163.com
 ```
